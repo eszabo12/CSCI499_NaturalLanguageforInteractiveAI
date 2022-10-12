@@ -3,11 +3,13 @@ import os
 import tqdm
 import torch
 from sklearn.metrics import accuracy_score
+from torch.utils.data import DataLoader, Dataset
 
 from eval_utils import downstream_validation
 import utils
 import data_utils
 
+from dataloader import cbow_loader
 
 def setup_dataloader(args):
     """
@@ -32,6 +34,7 @@ def setup_dataloader(args):
         vocab_to_index,
         suggested_padding_len,
     )
+    #[num]
 
     # ================== TODO: CODE HERE ================== #
     # Task: Given the tokenized and encoded text, you need to
@@ -44,8 +47,22 @@ def setup_dataloader(args):
     # (you can use utils functions) and create respective
     # dataloaders.
     # ===================================================== #
-
-    train_loader = None
+    dataset = []
+    didx = 0
+    for idx, sentence in enumerate(encoded_sentences):
+        for idx, word in enumerate(sentence):
+            context_word = []
+            target   = []            
+            begin = idx - args.context_window
+            end = idx + args.context_window + 1
+            context_word.append([sentence[i] for i in range(begin, end) if 0 <= i < suggested_padding_len and i != idx])
+            target.append(word)
+            dataset.append(tuple(context_word, target))
+            didx += 1
+    len = didx
+    print(len)
+    train_dataset, test_dataset = torch.utils.data.random_split(dataset, [len,len])
+    train_loader = cbow_loader(args, encoded_sentences, lens, vocab_to_index, suggested_padding_len)
     val_loader = None
     return train_loader, val_loader
 
@@ -146,6 +163,8 @@ def validate(args, model, loader, optimizer, criterion, device):
 
 
 def main(args):
+    options = vars(args)
+    print(options) #print all arguments
     device = utils.get_device(args.force_cpu)
 
     # load analogies for downstream eval
@@ -262,6 +281,12 @@ if __name__ == "__main__":
         default=5,
         type=int,
         help="number of epochs between saving model checkpoint",
+    )
+    parser.add_argument(
+        "--context_window",
+        default=1,
+        type=int,
+        help="how many words the cbow sees before and after the target word",
     )
     # ================== TODO: CODE HERE ================== #
     # Task (optional): Add any additional command line
