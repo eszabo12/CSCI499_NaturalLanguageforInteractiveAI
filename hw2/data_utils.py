@@ -7,8 +7,8 @@ import numpy as np
 from collections import Counter
 from spacy.lang.en import English
 
-
-def process_book_dir(d, max_per_book=None):
+#CHANGED THE MAX PER BOOK TO SMTH SMALL PLS CHANGE BACK BEFORE ACTUALLY TRAINING
+def process_book_dir(d, max_per_book=2000):
     nlp = English()
     nlp.add_pipe("sentencizer")
     nlp.max_length = 3293518  # we aren't doing any heavy parsing or anything; set based on biggest book
@@ -27,6 +27,7 @@ def process_book_dir(d, max_per_book=None):
                     doc = nlp(entire_book)
                     sentences = list(doc.sents)
                     sentences = [preprocess_string(str(s)) for s in sentences]
+                    # print(sentences)
                     processed_text_lines.extend(
                         [[s, book_title] for s in sentences if len(s) > 0]
                     )
@@ -37,6 +38,7 @@ def process_book_dir(d, max_per_book=None):
         "read in %d lines from %d files in directory %s"
         % (len(processed_text_lines), n_files, d)
     )
+    # print(processed_text_lines)
     return processed_text_lines
 
 
@@ -127,7 +129,6 @@ def encode_data(data, v2i, seq_len):
     num_insts = len(data)
     x = np.zeros((num_insts, seq_len), dtype=np.int32)
     lens = np.zeros((num_insts, 1), dtype=np.int32)
-
     idx = 0
     n_early_cutoff = 0
     n_unks = 0
@@ -157,5 +158,5 @@ def encode_data(data, v2i, seq_len):
         % (n_early_cutoff, seq_len)
     )
     print("INFO: encoded %d sentences without regard to order" % idx)
-
+    print(x)
     return x, lens

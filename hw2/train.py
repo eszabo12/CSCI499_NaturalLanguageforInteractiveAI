@@ -9,7 +9,8 @@ from eval_utils import downstream_validation
 import utils
 import data_utils
 
-from dataloader import cbow_loader
+from dataloader import cbow_data
+from model import cbow
 
 def setup_dataloader(args):
     """
@@ -20,7 +21,6 @@ def setup_dataloader(args):
 
     # read in training data from books dataset
     sentences = data_utils.process_book_dir(args.data_dir)
-
     # build one hot maps for input and output
     (
         vocab_to_index,
@@ -50,21 +50,35 @@ def setup_dataloader(args):
     dataset = []
     didx = 0
     for idx, sentence in enumerate(encoded_sentences):
-        for idx, word in enumerate(sentence):
-            context_word = []
-            target   = []            
+        # print(sentence)
+        length = lens[idx][0]
+        for idx, word in enumerate(sentence):      
             begin = idx - args.context_window
             end = idx + args.context_window + 1
-            context_word.append([sentence[i] for i in range(begin, end) if 0 <= i < suggested_padding_len and i != idx])
-            target.append(word)
-            dataset.append(tuple(context_word, target))
+            context_words = []
+            for i in range(begin, end):
+                if i != idx:
+                    if 0 <= i < length:
+                        context_words.append(sentence[i])
+                    else:
+                        context_words.append(0)
+            # [sentence[i] for i in range(begin, end) if 0 <= i < length and i != idx ]
+            if sum(context_words) == 0:
+                # index out of bounds, past the sentence length, or all padding
+                #this can't happen in real sentences bc we throw out words of len 0
+                continue
+            target = word
+            dataset.append(tuple((context_words, target)))
+            # print(tuple((context_words, target)))
             didx += 1
-    len = didx
-    print(len)
-    train_dataset, test_dataset = torch.utils.data.random_split(dataset, [len,len])
-    train_loader = cbow_loader(args, encoded_sentences, lens, vocab_to_index, suggested_padding_len)
-    val_loader = None
-    return train_loader, val_loader
+    length = didx
+    print("len", length)
+    train_dataset, test_dataset = torch.utils.data.random_split(dataset, [length - 3000,3000 ])
+    train_set = cbow_data(args, train_dataset)
+    val_set = cbow_data(args, test_dataset)
+    train_loader = DataLoader(train_set, batch_size=args.batch_size, drop_last=True)
+    val_loader = DataLoader(val_set, batch_size=args.batch_size, drop_last=True)
+    return train_loader, val_loader, index_to_vocab
 
 
 def setup_model(args):
@@ -75,7 +89,7 @@ def setup_model(args):
     # ================== TODO: CODE HERE ================== #
     # Task: Initialize your CBOW or Skip-Gram model.
     # ===================================================== #
-    model = None
+    model = cbow(args)
     return model
 
 
@@ -89,8 +103,8 @@ def setup_optimizer(args, model):
     # Task: Initialize the loss function for predictions. 
     # Also initialize your optimizer.
     # ===================================================== #
-    criterion = None
-    optimizer = None
+    criterion = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters())
     return criterion, optimizer
 
 
@@ -113,12 +127,14 @@ def train_epoch(
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, labels) in tqdm.tqdm(loader):
+        print("inputs, labels", inputs.size(), labels.size())
         # put model inputs to device
         inputs, labels = inputs.to(device).long(), labels.to(device).long()
 
         # calculate the loss and train accuracy and perform backprop
         # NOTE: feel free to change the parameters to the model forward pass here + outputs
-        pred_logits = model(inputs, labels)
+        pred_logits = model(inputs)
+        print("pred_logits", pred_logits.size())
 
         # calculate prediction loss
         loss = criterion(pred_logits.squeeze(), labels)
@@ -164,25 +180,26 @@ def validate(args, model, loader, optimizer, criterion, device):
 
 def main(args):
     options = vars(args)
-    print(options) #print all arguments
+    # print(options)
     device = utils.get_device(args.force_cpu)
 
     # load analogies for downstream eval
     external_val_analogies = utils.read_analogies(args.analogies_fn)
 
     if args.downstream_eval:
-        word_vec_file = os.path.join(args.outputs_dir, args.word_vector_fn)
+        word_vec_file = os.path.join(args.output_dir, args.word_vector_fn)
         assert os.path.exists(word_vec_file), "need to train the word vecs first!"
         downstream_validation(word_vec_file, external_val_analogies)
         return
 
     # get dataloaders
-    train_loader, val_loader = setup_dataloader(args)
+    train_loader, val_loader, index_to_vocab = setup_dataloader(args)
+
     loaders = {"train": train_loader, "val": val_loader}
 
     # build model
     model = setup_model(args)
-    print(model)
+    # print(model)
 
     # get optimizer
     criterion, optimizer = setup_optimizer(args, model)
@@ -222,23 +239,21 @@ def main(args):
             # ===================================================== #
 
             # save word vectors
-            word_vec_file = os.path.join(args.outputs_dir, args.word_vector_fn)
+            word_vec_file = os.path.join(args.output_dir, args.word_vector_fn)
             print("saving word vec to ", word_vec_file)
-            utils.save_word2vec_format(word_vec_file, model, i2v)
+            utils.save_word2vec_format(word_vec_file, model, index_to_vocab)
 
             # evaluate learned embeddings on a downstream task
             downstream_validation(word_vec_file, external_val_analogies)
-
 
         if epoch % args.save_every == 0:
             ckpt_file = os.path.join(args.output_dir, "model.ckpt")
             print("saving model to ", ckpt_file)
             torch.save(model, ckpt_file)
 
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output_dir", type=str, help="where to save training outputs")
+    parser.add_argument("--output_dir", type=str, help="where to save training outputs", default='./saved')
     parser.add_argument("--data_dir", type=str, help="where the book dataset is stored")
     parser.add_argument(
         "--downstream_eval",
@@ -257,7 +272,7 @@ if __name__ == "__main__":
         "--vocab_size", type=int, default=3000, help="size of vocabulary"
     )
     parser.add_argument(
-        "--batch_size", type=int, default=32, help="size of each batch in loader"
+        "--batch_size", type=int, default=256, help="size of each batch in loader"
     )
     parser.add_argument("--force_cpu", action="store_true", help="debug mode")
     parser.add_argument(

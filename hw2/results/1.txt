@@ -1,0 +1,31 @@
+def process_book_dir(d, max_per_book=200):
+
+train loss : 2.2211368223176384 | train acc: 0.4846601277372263
+
+..Total performance across all 1309 analogies: 0.0008 (Exact); 0.0016 (MRR); 641 (MR)
+...Analogy performance across 969 "sem" relation types: 0.0010 (Exact); 0.0014 (MRR); 705 (MR)
+        relation        N       exact   MRR     MR
+        capitals        1       0.0000  0.0000  inf
+        binary_gender   12      0.0833  0.0837  12
+        antonym 54      0.0000  0.0003  3858
+        member  4       0.0000  0.0000  inf
+        hypernomy       542     0.0000  0.0005  2104
+        similar 117     0.0000  0.0004  2352
+        partof  29      0.0000  0.0001  12093
+        instanceof      9       0.0000  0.0000  inf
+        derivedfrom     133     0.0000  0.0002  5349
+        hascontext      32      0.0000  0.0004  2755
+        relatedto       10      0.0000  0.0011  913
+        attributeof     11      0.0000  0.0000  inf
+        causes  6       0.0000  0.0000  inf
+        entails 9       0.0000  0.0000  inf
+...Analogy performance across 340 "syn" relation types: 0.0000 (Exact); 0.0020 (MRR); 509 (MR)
+        relation        N       exact   MRR     MR
+        adj_adv 22      0.0000  0.0005  2004
+        comparative     7       0.0000  0.0000  inf
+        superlative     3       0.0000  0.0007  1413
+        present_participle      62      0.0000  0.0003  3992
+        denonym 2       0.0000  0.0000  inf
+        past_tense      64      0.0000  0.0006  1814
+        plural_nouns    107     0.0000  0.0048  208
+        plural_verbs    73      0.0000  0.0012  820

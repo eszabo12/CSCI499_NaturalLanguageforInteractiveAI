@@ -33,10 +33,10 @@ export PYTHONPATH=$PWD:$PYTHONPATH
 
 ```
 # first create a virtualenv 
-virtualenv -p $(which python3) ./hw1
+virtualenv -p $(which python3) ./venv
 
 # activate virtualenv
-source ./hw1/bin/activate
+source ./venv/bin/activate
 
 # install packages
 pip3 install -r requirements.txt

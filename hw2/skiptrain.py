@@ -4,13 +4,24 @@ import tqdm
 import torch
 from sklearn.metrics import accuracy_score
 from torch.utils.data import DataLoader, Dataset
-
+import random
 from eval_utils import downstream_validation
 import utils
 import data_utils
 
-from dataloader import cbow_data
-from model import cbow
+from skipmodel import skip
+
+class skip_data(Dataset):
+    def __init__(self, args, dataset):
+        self.dataset = dataset
+        self.len = len(dataset)
+
+    def __getitem__(self, idx):
+        context, output = self.dataset[idx]
+        return torch.tensor(context), torch.tensor(output)
+
+    def __len__(self):
+        return self.len
 
 def setup_dataloader(args):
     """
@@ -47,7 +58,8 @@ def setup_dataloader(args):
     # (you can use utils functions) and create respective
     # dataloaders.
     # ===================================================== #
-    dataset = []
+    dataset_t = []
+    dataset_v = []
     didx = 0
     for idx, sentence in enumerate(encoded_sentences):
         # print(sentence)
@@ -68,18 +80,19 @@ def setup_dataloader(args):
                 #this can't happen in real sentences bc we throw out words of len 0
                 continue
             target = word
-            dataset.append(tuple((context_words, target)))
-            # print(tuple((context_words, target)))
+            # [0,9] - 0.8 for train and 0.2 for test
+            if torch.randint(10) <=7:
+                dataset_v.append(tuple((target, context_words)))
+            else:
+                dataset_t.append(tuple((target, context_words)))
             didx += 1
     length = didx
     print("len", length)
-    train_dataset, test_dataset = torch.utils.data.random_split(dataset, [length - 3000,3000 ])
-    train_set = cbow_data(args, train_dataset)
-    val_set = cbow_data(args, test_dataset)
+    train_set = skip_data(args, dataset_t)
+    val_set = skip_data(args, dataset_v)
     train_loader = DataLoader(train_set, batch_size=args.batch_size, drop_last=True)
     val_loader = DataLoader(val_set, batch_size=args.batch_size, drop_last=True)
     return train_loader, val_loader, index_to_vocab
-
 
 def setup_model(args):
     """
@@ -89,7 +102,7 @@ def setup_model(args):
     # ================== TODO: CODE HERE ================== #
     # Task: Initialize your CBOW or Skip-Gram model.
     # ===================================================== #
-    model = cbow(args)
+    model = skip(args)
     return model
 
 
@@ -103,7 +116,7 @@ def setup_optimizer(args, model):
     # Task: Initialize the loss function for predictions. 
     # Also initialize your optimizer.
     # ===================================================== #
-    criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters())
     return criterion, optimizer
 

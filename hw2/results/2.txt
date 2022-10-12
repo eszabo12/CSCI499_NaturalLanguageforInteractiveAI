@@ -1,0 +1,2 @@
+def process_book_dir(d, max_per_book=2000):
+train_dataset, test_dataset = torch.utils.data.random_split(dataset, [length - 3000,3000 ])
