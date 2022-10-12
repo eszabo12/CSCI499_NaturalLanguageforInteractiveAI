@@ -8,17 +8,19 @@ import random
 from eval_utils import downstream_validation
 import utils
 import data_utils
+import numpy as np
 
 from skipmodel import skip
 
+verbose = True
 class skip_data(Dataset):
     def __init__(self, args, dataset):
         self.dataset = dataset
         self.len = len(dataset)
 
     def __getitem__(self, idx):
-        context, output = self.dataset[idx]
-        return torch.tensor(context), torch.tensor(output)
+        input, context = self.dataset[idx]
+        return torch.tensor(input, dtype=torch.float32), torch.tensor(context)
 
     def __len__(self):
         return self.len
@@ -81,7 +83,7 @@ def setup_dataloader(args):
                 continue
             target = word
             # [0,9] - 0.8 for train and 0.2 for test
-            if torch.randint(10) <=7:
+            if torch.randint(10, (1,)) <=7:
                 dataset_v.append(tuple((target, context_words)))
             else:
                 dataset_t.append(tuple((target, context_words)))
@@ -140,17 +142,35 @@ def train_epoch(
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, labels) in tqdm.tqdm(loader):
-        print("inputs, labels", inputs.size(), labels.size())
+        print(labels[0])
+        if verbose:
+            print("inputs, labels", inputs.size(), labels.size())
         # put model inputs to device
-        inputs, labels = inputs.to(device).long(), labels.to(device).long()
+        labels = torch.nn.functional.one_hot(labels, 3000) #number of classes is 3000
+        if verbose:
+            print("labels", labels.size())
+        labels = torch.sum(labels, dim=1)
+        if verbose:
+            print("labels", labels.size())
+        inputs.requires_grad = True
+        inputs, labels = inputs.to(device).long(), labels.to(device).float()
 
         # calculate the loss and train accuracy and perform backprop
         # NOTE: feel free to change the parameters to the model forward pass here + outputs
         pred_logits = model(inputs)
-        print("pred_logits", pred_logits.size())
-
+        if verbose:
+            print("pred_logits", pred_logits.size())
+        values, indices = torch.topk(pred_logits, args.context_window*2)
+        # print("indices", indices)
+        hot_logits = torch.nn.functional.one_hot(indices, 3000)
+        hot_logits = torch.sum(hot_logits, dim=1).type(dtype=torch.float32)
+        if verbose:
+            print("hot_logits", hot_logits.size())
         # calculate prediction loss
-        loss = criterion(pred_logits.squeeze(), labels)
+        if verbose:
+            print("hot_logits, labels", hot_logits.type(),labels.type() )
+        hot_logits.requires_grad = True
+        loss = criterion(hot_logits, labels)
 
         # step optimizer and compute gradients during training
         if training:
@@ -212,7 +232,6 @@ def main(args):
 
     # build model
     model = setup_model(args)
-    # print(model)
 
     # get optimizer
     criterion, optimizer = setup_optimizer(args, model)
