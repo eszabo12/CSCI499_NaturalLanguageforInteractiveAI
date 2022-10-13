@@ -14,12 +14,16 @@ class skip(torch.nn.Module):
         self.context_window = args.context_window
         self.padding_idx = 0
         self.embedding_dim = 128
-        self.embedding = torch.nn.Embedding(args.batch_size, self.embedding_dim, padding_idx=self.padding_idx)
+        self.embedding = torch.nn.Embedding(self.vocab_size, self.embedding_dim, padding_idx=self.padding_idx)
         self.linear = torch.nn.Linear(self.embedding_dim, self.context_window*2)
-        self.verbose = False
+        self.verbose = True
         self.args = args
     def forward(self, x):
+        if self.verbose:
+            print("x size", x.size())
         embed = self.embedding(x)
+        if self.verbose:
+            print("embed size", embed.size())
         if self.verbose:
             print("embed size", embed.size())
         out = self.linear(embed)

@@ -50,7 +50,6 @@ def setup_dataloader(args):
     dataset = []
     didx = 0
     for idx, sentence in enumerate(encoded_sentences):
-        # print(sentence)
         length = lens[idx][0]
         for idx, word in enumerate(sentence):      
             begin = idx - args.context_window
@@ -134,7 +133,7 @@ def train_epoch(
         # calculate the loss and train accuracy and perform backprop
         # NOTE: feel free to change the parameters to the model forward pass here + outputs
         pred_logits = model(inputs)
-        print("pred_logits", pred_logits.size())
+        # print("pred_logits", pred_logits.size())
 
         # calculate prediction loss
         loss = criterion(pred_logits.squeeze(), labels)
@@ -179,8 +178,6 @@ def validate(args, model, loader, optimizer, criterion, device):
 
 
 def main(args):
-    options = vars(args)
-    # print(options)
     device = utils.get_device(args.force_cpu)
 
     # load analogies for downstream eval
@@ -199,7 +196,6 @@ def main(args):
 
     # build model
     model = setup_model(args)
-    # print(model)
 
     # get optimizer
     criterion, optimizer = setup_optimizer(args, model)

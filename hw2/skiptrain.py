@@ -12,7 +12,7 @@ import numpy as np
 
 from skipmodel import skip
 
-verbose = True
+verbose = False
 class skip_data(Dataset):
     def __init__(self, args, dataset):
         self.dataset = dataset
@@ -119,7 +119,7 @@ def setup_optimizer(args, model):
     criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters())
     return criterion, optimizer
-    
+
 def get_accuracy(outputs: torch.Tensor, labels: torch.Tensor):
     length = len(outputs)
     loss = 0
@@ -134,8 +134,8 @@ def iou_pytorch(outputs: torch.Tensor, labels: torch.Tensor):
     # be with the BATCH x 1 x H x W shape
     # outputs = outputs.squeeze(1)  # BATCH x 1 x H x W => BATCH x H x W
     
-    intersection = (outputs & labels).float().sum((1, 2))  # Will be zero if Truth=0 or Prediction=0
-    union = (outputs | labels).float().sum((1, 2))         # Will be zzero if both are 0
+    intersection = (outputs & labels).float().sum()  # Will be zero if Truth=0 or Prediction=0
+    union = (outputs | labels).float().sum()         # Will be zero if both are 0
     
     iou = (intersection + SMOOTH) / (union + SMOOTH)  # We smooth our devision to avoid 0/0
     
@@ -162,7 +162,6 @@ def train_epoch(
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, labels) in tqdm.tqdm(loader):
-        print(labels[0])
         if verbose:
             print("inputs, labels", inputs.size(), labels.size())
         # put model inputs to device
@@ -181,7 +180,6 @@ def train_epoch(
         if verbose:
             print("pred_logits", pred_logits.size())
         values, indices = torch.topk(pred_logits, args.context_window*2)
-        # print("indices", indices)
         hot_logits = torch.nn.functional.one_hot(indices, 3000)
         hot_logits = torch.sum(hot_logits, dim=1).type(dtype=torch.float32)
         if verbose:
@@ -302,7 +300,7 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output_dir", type=str, help="where to save training outputs", default='./saved')
+    parser.add_argument("--output_dir", type=str, help="where to save training outputs", default='./skipsaved')
     parser.add_argument("--data_dir", type=str, help="where the book dataset is stored")
     parser.add_argument(
         "--downstream_eval",

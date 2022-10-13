@@ -8,7 +8,7 @@ from collections import Counter
 from spacy.lang.en import English
 
 #CHANGED THE MAX PER BOOK TO SMTH SMALL PLS CHANGE BACK BEFORE ACTUALLY TRAINING
-def process_book_dir(d, max_per_book=10):
+def process_book_dir(d, max_per_book=None):
     nlp = English()
     nlp.add_pipe("sentencizer")
     nlp.max_length = 3293518  # we aren't doing any heavy parsing or anything; set based on biggest book
@@ -158,5 +158,5 @@ def encode_data(data, v2i, seq_len):
         % (n_early_cutoff, seq_len)
     )
     print("INFO: encoded %d sentences without regard to order" % idx)
-    print(x)
+    # print(x)
     return x, lens
