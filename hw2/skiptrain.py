@@ -2,7 +2,7 @@ import argparse
 import os
 import tqdm
 import torch
-from sklearn.metrics import accuracy_score
+# from sklearn.metrics import accuracy_score
 from torch.utils.data import DataLoader, Dataset
 import random
 from eval_utils import downstream_validation
@@ -47,7 +47,6 @@ def setup_dataloader(args):
         vocab_to_index,
         suggested_padding_len,
     )
-    #[num]
 
     # ================== TODO: CODE HERE ================== #
     # Task: Given the tokenized and encoded text, you need to
@@ -64,7 +63,6 @@ def setup_dataloader(args):
     dataset_v = []
     didx = 0
     for idx, sentence in enumerate(encoded_sentences):
-        # print(sentence)
         length = lens[idx][0]
         for idx, word in enumerate(sentence):      
             begin = idx - args.context_window
@@ -121,8 +119,30 @@ def setup_optimizer(args, model):
     criterion = torch.nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters())
     return criterion, optimizer
+    
+def get_accuracy(outputs: torch.Tensor, labels: torch.Tensor):
+    length = len(outputs)
+    loss = 0
+    for i in range(length):
+        loss += iou_pytorch(outputs[i].type(torch.int32), labels[i].type(torch.int32))
+    return loss / length
 
-
+def iou_pytorch(outputs: torch.Tensor, labels: torch.Tensor):
+    SMOOTH = 1e-6
+    # You can comment out this line if you are passing tensors of equal shape
+    # But if you are passing output from UNet or something it will most probably
+    # be with the BATCH x 1 x H x W shape
+    # outputs = outputs.squeeze(1)  # BATCH x 1 x H x W => BATCH x H x W
+    
+    intersection = (outputs & labels).float().sum((1, 2))  # Will be zero if Truth=0 or Prediction=0
+    union = (outputs | labels).float().sum((1, 2))         # Will be zzero if both are 0
+    
+    iou = (intersection + SMOOTH) / (union + SMOOTH)  # We smooth our devision to avoid 0/0
+    
+    thresholded = torch.clamp(20 * (iou - 0.5), 0, 10).ceil() / 10  # This is equal to comparing with thresolds
+    
+    return thresholded.mean()
+    
 def train_epoch(
     args,
     model,
@@ -138,7 +158,7 @@ def train_epoch(
     # keep track of the model predictions for computing accuracy
     pred_labels = []
     target_labels = []
-
+    idx = 0
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, labels) in tqdm.tqdm(loader):
@@ -182,11 +202,10 @@ def train_epoch(
         epoch_loss += loss.item()
 
         # compute metrics
-        preds = pred_logits.argmax(-1)
-        pred_labels.extend(preds.cpu().numpy())
-        target_labels.extend(labels.cpu().numpy())
+        pred_labels.append(hot_logits)
+        target_labels.append(labels)
 
-    acc = accuracy_score(pred_labels, target_labels)
+    acc = get_accuracy(pred_labels, target_labels)
     epoch_loss /= len(loader)
 
     return epoch_loss, acc
@@ -210,10 +229,8 @@ def validate(args, model, loader, optimizer, criterion, device):
 
     return val_loss, val_acc
 
-
 def main(args):
     options = vars(args)
-    # print(options)
     device = utils.get_device(args.force_cpu)
 
     # load analogies for downstream eval

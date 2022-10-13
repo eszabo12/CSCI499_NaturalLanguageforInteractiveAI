@@ -83,7 +83,7 @@ This assignment will be scored out of 25 points on the *correctness* and *docume
 - [ ] (10pt) Implementation of the training and evaluation loops
 - [ ] (5pt) *Report* your results through an .md file in your submission; discuss your implementation choices and document the performance of your model (both training and validation performance) under the conditions you settled on (e.g., what hyperparameters you chose) and discuss why these are a good set.
 
-Remember that each coding assignment will be woth 25 points, for a total of 100 points towards coding assignments which account for 25% of your course grade.
+Remember that each coding assignment will be worth 25 points, for a total of 100 points towards coding assignments which account for 25% of your course grade.
 
 ## Available Bonus Points
 
