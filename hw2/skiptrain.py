@@ -164,10 +164,12 @@ def train_epoch(
     for (inputs, labels) in tqdm.tqdm(loader):
         if verbose:
             print("inputs, labels", inputs.size(), labels.size())
-        # put model inputs to device
-        labels = torch.nn.functional.one_hot(labels, 3000) #number of classes is 3000
         if verbose:
-            print("labels", labels.size())
+            print("labels", labels[0])
+        # put model inputs to device
+        labels = torch.nn.functional.one_hot(labels.to(torch.int64), 3000) #number of classes is 3000
+        if verbose:
+            print("labels", labels)
         labels = torch.sum(labels, dim=1)
         if verbose:
             print("labels", labels.size())
