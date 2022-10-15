@@ -1,0 +1,1250 @@
+10k line limit
+
+Using CPU
+read in 89693 lines from 30 files in directory books/
+INFO: had to represent 254503/1800487 (0.1414) tokens as unk with vocab limit 3000
+INFO: cut off 0 sentences at len 830 before true ending
+INFO: encoded 89693 sentences without regard to order
+len 1979873
+Epoch 0
+train loss : 0.6935603106568996 | train acc: 0.0
+val loss : 0.6935603249681986 | val acc: 0.0
+saving word vec to  skipsaved/learned_word_vectors.txt
+Saving word vectors to file...
+Loading vectors from file 'skipsaved/learned_word_vectors.txt'...
+... done loading vectors
+Evaluating downstream performance on analogy task over 1309 analogies...
+WARNING: KeyError: "word 'moscow' not in vocabulary"
+WARNING: KeyError: "word 'baron' not in vocabulary"
+WARNING: KeyError: "word 'formerly' not in vocabulary"
+WARNING: KeyError: "word 'firmly' not in vocabulary"
+WARNING: KeyError: "word 'constantly' not in vocabulary"
+WARNING: KeyError: "word 'angrily' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'smoking' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'firing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'descended' not in vocabulary"
+WARNING: KeyError: "word 'reaching' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'pressing' not in vocabulary"
+WARNING: KeyError: "word 'wearing' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'expecting' not in vocabulary"
+WARNING: KeyError: "word 'bending' not in vocabulary"
+WARNING: KeyError: "word 'shouting' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'fired' not in vocabulary"
+WARNING: KeyError: "word 'weeping' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'loving' not in vocabulary"
+WARNING: KeyError: "word 'carts' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'rivers' not in vocabulary"
+WARNING: KeyError: "word 'guards' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'yards' not in vocabulary"
+WARNING: KeyError: "word 'citizen' not in vocabulary"
+WARNING: KeyError: "word 'guardians' not in vocabulary"
+WARNING: KeyError: "word 'thousands' not in vocabulary"
+WARNING: KeyError: "word 'plans' not in vocabulary"
+WARNING: KeyError: "word 'bands' not in vocabulary"
+WARNING: KeyError: "word 'bears' not in vocabulary"
+WARNING: KeyError: "word 'strangers' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'feels' not in vocabulary"
+WARNING: KeyError: "word 'cart' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'wounds' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'loudly' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'poison' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'curtain' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'baroness' not in vocabulary"
+WARNING: KeyError: "word 'club' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'oil' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'purse' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'retire' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'fifth' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'source' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'repeat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'reproach' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'uniform' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'ample' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'napoleon' not in vocabulary"
+WARNING: KeyError: "word 'petersburg' not in vocabulary"
+WARNING: KeyError: "word 'nicholas' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'indifference' not in vocabulary"
+WARNING: KeyError: "word 'steel' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'spear' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'italian' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'signal' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'chase' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'major' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'retreat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+...Total performance across all 1309 analogies: 0.0015 (Exact); 0.0031 (MRR); 321 (MR)
+...Analogy performance across 969 "sem" relation types: 0.0000 (Exact); 0.0017 (MRR); 593 (MR)
+	relation	N	exact	MRR	MR
+	capitals	1	0.0000	0.0000	inf
+	binary_gender	12	0.0000	0.0064	156
+	antonym	54	0.0000	0.0019	525
+	member	4	0.0000	0.0004	2232
+	hypernomy	542	0.0000	0.0019	538
+	similar	117	0.0000	0.0019	532
+	partof	29	0.0000	0.0010	985
+	instanceof	9	0.0000	0.0003	2997
+	derivedfrom	133	0.0000	0.0009	1053
+	hascontext	32	0.0000	0.0007	1495
+	relatedto	10	0.0000	0.0009	1062
+	attributeof	11	0.0000	0.0020	496
+	causes	6	0.0000	0.0007	1407
+	entails	9	0.0000	0.0009	1090
+...Analogy performance across 340 "syn" relation types: 0.0059 (Exact); 0.0072 (MRR); 139 (MR)
+	relation	N	exact	MRR	MR
+	adj_adv	22	0.0000	0.0007	1494
+	comparative	7	0.0000	0.0012	836
+	superlative	3	0.0000	0.0018	570
+	present_participle	62	0.0000	0.0014	697
+	denonym	2	0.0000	0.0051	196
+	past_tense	64	0.0156	0.0167	60
+	plural_nouns	107	0.0093	0.0105	95
+	plural_verbs	73	0.0000	0.0016	616
+saving model to  skipsaved/model.ckpt
+Epoch 1
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 2
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 3
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 4
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 5
+train loss : 0.6935603106568996 | train acc: 0.0
+val loss : 0.6935603249681986 | val acc: 0.0
+saving word vec to  skipsaved/learned_word_vectors.txt
+Saving word vectors to file...
+Loading vectors from file 'skipsaved/learned_word_vectors.txt'...
+... done loading vectors
+Evaluating downstream performance on analogy task over 1309 analogies...
+WARNING: KeyError: "word 'moscow' not in vocabulary"
+WARNING: KeyError: "word 'baron' not in vocabulary"
+WARNING: KeyError: "word 'formerly' not in vocabulary"
+WARNING: KeyError: "word 'firmly' not in vocabulary"
+WARNING: KeyError: "word 'constantly' not in vocabulary"
+WARNING: KeyError: "word 'angrily' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'smoking' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'firing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'descended' not in vocabulary"
+WARNING: KeyError: "word 'reaching' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'pressing' not in vocabulary"
+WARNING: KeyError: "word 'wearing' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'expecting' not in vocabulary"
+WARNING: KeyError: "word 'bending' not in vocabulary"
+WARNING: KeyError: "word 'shouting' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'fired' not in vocabulary"
+WARNING: KeyError: "word 'weeping' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'loving' not in vocabulary"
+WARNING: KeyError: "word 'carts' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'rivers' not in vocabulary"
+WARNING: KeyError: "word 'guards' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'yards' not in vocabulary"
+WARNING: KeyError: "word 'citizen' not in vocabulary"
+WARNING: KeyError: "word 'guardians' not in vocabulary"
+WARNING: KeyError: "word 'thousands' not in vocabulary"
+WARNING: KeyError: "word 'plans' not in vocabulary"
+WARNING: KeyError: "word 'bands' not in vocabulary"
+WARNING: KeyError: "word 'bears' not in vocabulary"
+WARNING: KeyError: "word 'strangers' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'feels' not in vocabulary"
+WARNING: KeyError: "word 'cart' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'wounds' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'loudly' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'poison' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'curtain' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'baroness' not in vocabulary"
+WARNING: KeyError: "word 'club' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'oil' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'purse' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'retire' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'fifth' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'source' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'repeat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'reproach' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'uniform' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'ample' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'napoleon' not in vocabulary"
+WARNING: KeyError: "word 'petersburg' not in vocabulary"
+WARNING: KeyError: "word 'nicholas' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'indifference' not in vocabulary"
+WARNING: KeyError: "word 'steel' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'spear' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'italian' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'signal' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'chase' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'major' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'retreat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+...Total performance across all 1309 analogies: 0.0015 (Exact); 0.0031 (MRR); 321 (MR)
+...Analogy performance across 969 "sem" relation types: 0.0000 (Exact); 0.0017 (MRR); 593 (MR)
+	relation	N	exact	MRR	MR
+	capitals	1	0.0000	0.0000	inf
+	binary_gender	12	0.0000	0.0064	156
+	antonym	54	0.0000	0.0019	525
+	member	4	0.0000	0.0004	2232
+	hypernomy	542	0.0000	0.0019	538
+	similar	117	0.0000	0.0019	532
+	partof	29	0.0000	0.0010	985
+	instanceof	9	0.0000	0.0003	2997
+	derivedfrom	133	0.0000	0.0009	1053
+	hascontext	32	0.0000	0.0007	1495
+	relatedto	10	0.0000	0.0009	1062
+	attributeof	11	0.0000	0.0020	496
+	causes	6	0.0000	0.0007	1407
+	entails	9	0.0000	0.0009	1090
+...Analogy performance across 340 "syn" relation types: 0.0059 (Exact); 0.0072 (MRR); 139 (MR)
+	relation	N	exact	MRR	MR
+	adj_adv	22	0.0000	0.0007	1494
+	comparative	7	0.0000	0.0012	836
+	superlative	3	0.0000	0.0018	570
+	present_participle	62	0.0000	0.0014	697
+	denonym	2	0.0000	0.0051	196
+	past_tense	64	0.0156	0.0167	60
+	plural_nouns	107	0.0093	0.0105	95
+	plural_verbs	73	0.0000	0.0016	616
+saving model to  skipsaved/model.ckpt
+Epoch 6
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 7
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 8
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 9
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 10
+train loss : 0.6935603106568996 | train acc: 0.0
+val loss : 0.6935603249681986 | val acc: 0.0
+saving word vec to  skipsaved/learned_word_vectors.txt
+Saving word vectors to file...
+Loading vectors from file 'skipsaved/learned_word_vectors.txt'...
+... done loading vectors
+Evaluating downstream performance on analogy task over 1309 analogies...
+WARNING: KeyError: "word 'moscow' not in vocabulary"
+WARNING: KeyError: "word 'baron' not in vocabulary"
+WARNING: KeyError: "word 'formerly' not in vocabulary"
+WARNING: KeyError: "word 'firmly' not in vocabulary"
+WARNING: KeyError: "word 'constantly' not in vocabulary"
+WARNING: KeyError: "word 'angrily' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'smoking' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'firing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'descended' not in vocabulary"
+WARNING: KeyError: "word 'reaching' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'pressing' not in vocabulary"
+WARNING: KeyError: "word 'wearing' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'expecting' not in vocabulary"
+WARNING: KeyError: "word 'bending' not in vocabulary"
+WARNING: KeyError: "word 'shouting' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'fired' not in vocabulary"
+WARNING: KeyError: "word 'weeping' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'loving' not in vocabulary"
+WARNING: KeyError: "word 'carts' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'rivers' not in vocabulary"
+WARNING: KeyError: "word 'guards' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'yards' not in vocabulary"
+WARNING: KeyError: "word 'citizen' not in vocabulary"
+WARNING: KeyError: "word 'guardians' not in vocabulary"
+WARNING: KeyError: "word 'thousands' not in vocabulary"
+WARNING: KeyError: "word 'plans' not in vocabulary"
+WARNING: KeyError: "word 'bands' not in vocabulary"
+WARNING: KeyError: "word 'bears' not in vocabulary"
+WARNING: KeyError: "word 'strangers' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'feels' not in vocabulary"
+WARNING: KeyError: "word 'cart' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'wounds' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'loudly' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'poison' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'curtain' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'baroness' not in vocabulary"
+WARNING: KeyError: "word 'club' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'oil' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'purse' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'retire' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'fifth' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'source' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'repeat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'reproach' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'uniform' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'ample' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'napoleon' not in vocabulary"
+WARNING: KeyError: "word 'petersburg' not in vocabulary"
+WARNING: KeyError: "word 'nicholas' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'indifference' not in vocabulary"
+WARNING: KeyError: "word 'steel' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'spear' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'italian' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'signal' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'chase' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'major' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'retreat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+...Total performance across all 1309 analogies: 0.0015 (Exact); 0.0031 (MRR); 321 (MR)
+...Analogy performance across 969 "sem" relation types: 0.0000 (Exact); 0.0017 (MRR); 593 (MR)
+	relation	N	exact	MRR	MR
+	capitals	1	0.0000	0.0000	inf
+	binary_gender	12	0.0000	0.0064	156
+	antonym	54	0.0000	0.0019	525
+	member	4	0.0000	0.0004	2232
+	hypernomy	542	0.0000	0.0019	538
+	similar	117	0.0000	0.0019	532
+	partof	29	0.0000	0.0010	985
+	instanceof	9	0.0000	0.0003	2997
+	derivedfrom	133	0.0000	0.0009	1053
+	hascontext	32	0.0000	0.0007	1495
+	relatedto	10	0.0000	0.0009	1062
+	attributeof	11	0.0000	0.0020	496
+	causes	6	0.0000	0.0007	1407
+	entails	9	0.0000	0.0009	1090
+...Analogy performance across 340 "syn" relation types: 0.0059 (Exact); 0.0072 (MRR); 139 (MR)
+	relation	N	exact	MRR	MR
+	adj_adv	22	0.0000	0.0007	1494
+	comparative	7	0.0000	0.0012	836
+	superlative	3	0.0000	0.0018	570
+	present_participle	62	0.0000	0.0014	697
+	denonym	2	0.0000	0.0051	196
+	past_tense	64	0.0156	0.0167	60
+	plural_nouns	107	0.0093	0.0105	95
+	plural_verbs	73	0.0000	0.0016	616
+saving model to  skipsaved/model.ckpt
+Epoch 11
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 12
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 13
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 14
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 15
+train loss : 0.6935603106568996 | train acc: 0.0
+val loss : 0.6935603249681986 | val acc: 0.0
+saving word vec to  skipsaved/learned_word_vectors.txt
+Saving word vectors to file...
+Loading vectors from file 'skipsaved/learned_word_vectors.txt'...
+... done loading vectors
+Evaluating downstream performance on analogy task over 1309 analogies...
+WARNING: KeyError: "word 'moscow' not in vocabulary"
+WARNING: KeyError: "word 'baron' not in vocabulary"
+WARNING: KeyError: "word 'formerly' not in vocabulary"
+WARNING: KeyError: "word 'firmly' not in vocabulary"
+WARNING: KeyError: "word 'constantly' not in vocabulary"
+WARNING: KeyError: "word 'angrily' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'smoking' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'firing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'descended' not in vocabulary"
+WARNING: KeyError: "word 'reaching' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'pressing' not in vocabulary"
+WARNING: KeyError: "word 'wearing' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'expecting' not in vocabulary"
+WARNING: KeyError: "word 'bending' not in vocabulary"
+WARNING: KeyError: "word 'shouting' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'fired' not in vocabulary"
+WARNING: KeyError: "word 'weeping' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'loving' not in vocabulary"
+WARNING: KeyError: "word 'carts' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'rivers' not in vocabulary"
+WARNING: KeyError: "word 'guards' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'yards' not in vocabulary"
+WARNING: KeyError: "word 'citizen' not in vocabulary"
+WARNING: KeyError: "word 'guardians' not in vocabulary"
+WARNING: KeyError: "word 'thousands' not in vocabulary"
+WARNING: KeyError: "word 'plans' not in vocabulary"
+WARNING: KeyError: "word 'bands' not in vocabulary"
+WARNING: KeyError: "word 'bears' not in vocabulary"
+WARNING: KeyError: "word 'strangers' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'feels' not in vocabulary"
+WARNING: KeyError: "word 'cart' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'wounds' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'loudly' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'poison' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'curtain' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'baroness' not in vocabulary"
+WARNING: KeyError: "word 'club' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'oil' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'purse' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'retire' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'fifth' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'source' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'repeat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'reproach' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'uniform' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'ample' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'napoleon' not in vocabulary"
+WARNING: KeyError: "word 'petersburg' not in vocabulary"
+WARNING: KeyError: "word 'nicholas' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'indifference' not in vocabulary"
+WARNING: KeyError: "word 'steel' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'spear' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'italian' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'signal' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'chase' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'major' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'retreat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+...Total performance across all 1309 analogies: 0.0015 (Exact); 0.0031 (MRR); 321 (MR)
+...Analogy performance across 969 "sem" relation types: 0.0000 (Exact); 0.0017 (MRR); 593 (MR)
+	relation	N	exact	MRR	MR
+	capitals	1	0.0000	0.0000	inf
+	binary_gender	12	0.0000	0.0064	156
+	antonym	54	0.0000	0.0019	525
+	member	4	0.0000	0.0004	2232
+	hypernomy	542	0.0000	0.0019	538
+	similar	117	0.0000	0.0019	532
+	partof	29	0.0000	0.0010	985
+	instanceof	9	0.0000	0.0003	2997
+	derivedfrom	133	0.0000	0.0009	1053
+	hascontext	32	0.0000	0.0007	1495
+	relatedto	10	0.0000	0.0009	1062
+	attributeof	11	0.0000	0.0020	496
+	causes	6	0.0000	0.0007	1407
+	entails	9	0.0000	0.0009	1090
+...Analogy performance across 340 "syn" relation types: 0.0059 (Exact); 0.0072 (MRR); 139 (MR)
+	relation	N	exact	MRR	MR
+	adj_adv	22	0.0000	0.0007	1494
+	comparative	7	0.0000	0.0012	836
+	superlative	3	0.0000	0.0018	570
+	present_participle	62	0.0000	0.0014	697
+	denonym	2	0.0000	0.0051	196
+	past_tense	64	0.0156	0.0167	60
+	plural_nouns	107	0.0093	0.0105	95
+	plural_verbs	73	0.0000	0.0016	616
+saving model to  skipsaved/model.ckpt
+Epoch 16
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 17
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 18
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 19
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 20
+train loss : 0.6935603106568996 | train acc: 0.0
+val loss : 0.6935603249681986 | val acc: 0.0
+saving word vec to  skipsaved/learned_word_vectors.txt
+Saving word vectors to file...
+Loading vectors from file 'skipsaved/learned_word_vectors.txt'...
+... done loading vectors
+Evaluating downstream performance on analogy task over 1309 analogies...
+WARNING: KeyError: "word 'moscow' not in vocabulary"
+WARNING: KeyError: "word 'baron' not in vocabulary"
+WARNING: KeyError: "word 'formerly' not in vocabulary"
+WARNING: KeyError: "word 'firmly' not in vocabulary"
+WARNING: KeyError: "word 'constantly' not in vocabulary"
+WARNING: KeyError: "word 'angrily' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'smoking' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'firing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'descended' not in vocabulary"
+WARNING: KeyError: "word 'reaching' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'pressing' not in vocabulary"
+WARNING: KeyError: "word 'wearing' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'expecting' not in vocabulary"
+WARNING: KeyError: "word 'bending' not in vocabulary"
+WARNING: KeyError: "word 'shouting' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'fired' not in vocabulary"
+WARNING: KeyError: "word 'weeping' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'loving' not in vocabulary"
+WARNING: KeyError: "word 'carts' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'rivers' not in vocabulary"
+WARNING: KeyError: "word 'guards' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'yards' not in vocabulary"
+WARNING: KeyError: "word 'citizen' not in vocabulary"
+WARNING: KeyError: "word 'guardians' not in vocabulary"
+WARNING: KeyError: "word 'thousands' not in vocabulary"
+WARNING: KeyError: "word 'plans' not in vocabulary"
+WARNING: KeyError: "word 'bands' not in vocabulary"
+WARNING: KeyError: "word 'bears' not in vocabulary"
+WARNING: KeyError: "word 'strangers' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'feels' not in vocabulary"
+WARNING: KeyError: "word 'cart' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'wounds' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'loudly' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'poison' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'curtain' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'baroness' not in vocabulary"
+WARNING: KeyError: "word 'club' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'oil' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'purse' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'retire' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'fifth' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'source' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'repeat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'reproach' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'uniform' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'ample' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'napoleon' not in vocabulary"
+WARNING: KeyError: "word 'petersburg' not in vocabulary"
+WARNING: KeyError: "word 'nicholas' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'indifference' not in vocabulary"
+WARNING: KeyError: "word 'steel' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'spear' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'italian' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'signal' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'chase' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'major' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'retreat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+...Total performance across all 1309 analogies: 0.0015 (Exact); 0.0031 (MRR); 321 (MR)
+...Analogy performance across 969 "sem" relation types: 0.0000 (Exact); 0.0017 (MRR); 593 (MR)
+	relation	N	exact	MRR	MR
+	capitals	1	0.0000	0.0000	inf
+	binary_gender	12	0.0000	0.0064	156
+	antonym	54	0.0000	0.0019	525
+	member	4	0.0000	0.0004	2232
+	hypernomy	542	0.0000	0.0019	538
+	similar	117	0.0000	0.0019	532
+	partof	29	0.0000	0.0010	985
+	instanceof	9	0.0000	0.0003	2997
+	derivedfrom	133	0.0000	0.0009	1053
+	hascontext	32	0.0000	0.0007	1495
+	relatedto	10	0.0000	0.0009	1062
+	attributeof	11	0.0000	0.0020	496
+	causes	6	0.0000	0.0007	1407
+	entails	9	0.0000	0.0009	1090
+...Analogy performance across 340 "syn" relation types: 0.0059 (Exact); 0.0072 (MRR); 139 (MR)
+	relation	N	exact	MRR	MR
+	adj_adv	22	0.0000	0.0007	1494
+	comparative	7	0.0000	0.0012	836
+	superlative	3	0.0000	0.0018	570
+	present_participle	62	0.0000	0.0014	697
+	denonym	2	0.0000	0.0051	196
+	past_tense	64	0.0156	0.0167	60
+	plural_nouns	107	0.0093	0.0105	95
+	plural_verbs	73	0.0000	0.0016	616
+saving model to  skipsaved/model.ckpt
+Epoch 21
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 22
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 23
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 24
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 25
+train loss : 0.6935603106568996 | train acc: 0.0
+val loss : 0.6935603249681986 | val acc: 0.0
+saving word vec to  skipsaved/learned_word_vectors.txt
+Saving word vectors to file...
+Loading vectors from file 'skipsaved/learned_word_vectors.txt'...
+... done loading vectors
+Evaluating downstream performance on analogy task over 1309 analogies...
+WARNING: KeyError: "word 'moscow' not in vocabulary"
+WARNING: KeyError: "word 'baron' not in vocabulary"
+WARNING: KeyError: "word 'formerly' not in vocabulary"
+WARNING: KeyError: "word 'firmly' not in vocabulary"
+WARNING: KeyError: "word 'constantly' not in vocabulary"
+WARNING: KeyError: "word 'angrily' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'smoking' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'firing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'descended' not in vocabulary"
+WARNING: KeyError: "word 'reaching' not in vocabulary"
+WARNING: KeyError: "word 'answering' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'beating' not in vocabulary"
+WARNING: KeyError: "word 'advancing' not in vocabulary"
+WARNING: KeyError: "word 'fighting' not in vocabulary"
+WARNING: KeyError: "word 'pressing' not in vocabulary"
+WARNING: KeyError: "word 'wearing' not in vocabulary"
+WARNING: KeyError: "word 'riding' not in vocabulary"
+WARNING: KeyError: "word 'expecting' not in vocabulary"
+WARNING: KeyError: "word 'bending' not in vocabulary"
+WARNING: KeyError: "word 'shouting' not in vocabulary"
+WARNING: KeyError: "word 'rushing' not in vocabulary"
+WARNING: KeyError: "word 'fired' not in vocabulary"
+WARNING: KeyError: "word 'weeping' not in vocabulary"
+WARNING: KeyError: "word 'dressing' not in vocabulary"
+WARNING: KeyError: "word 'loving' not in vocabulary"
+WARNING: KeyError: "word 'carts' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'rivers' not in vocabulary"
+WARNING: KeyError: "word 'guards' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'yards' not in vocabulary"
+WARNING: KeyError: "word 'citizen' not in vocabulary"
+WARNING: KeyError: "word 'guardians' not in vocabulary"
+WARNING: KeyError: "word 'thousands' not in vocabulary"
+WARNING: KeyError: "word 'plans' not in vocabulary"
+WARNING: KeyError: "word 'bands' not in vocabulary"
+WARNING: KeyError: "word 'bears' not in vocabulary"
+WARNING: KeyError: "word 'strangers' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'feels' not in vocabulary"
+WARNING: KeyError: "word 'cart' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'drops' not in vocabulary"
+WARNING: KeyError: "word 'wounds' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'loudly' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'tear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'favor' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'tremble' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'poison' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'gun' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'stroke' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'curtain' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'activity' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'baroness' not in vocabulary"
+WARNING: KeyError: "word 'club' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'oil' not in vocabulary"
+WARNING: KeyError: "word 'sovereign' not in vocabulary"
+WARNING: KeyError: "word 'purse' not in vocabulary"
+WARNING: KeyError: "word 'term' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'retire' not in vocabulary"
+WARNING: KeyError: "word 'agitation' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'fifth' not in vocabulary"
+WARNING: KeyError: "word 'marble' not in vocabulary"
+WARNING: KeyError: "word 'source' not in vocabulary"
+WARNING: KeyError: "word 'flood' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'repeat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'lift' not in vocabulary"
+WARNING: KeyError: "word 'reproach' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'uniform' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'assume' not in vocabulary"
+WARNING: KeyError: "word 'ample' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'conceal' not in vocabulary"
+WARNING: KeyError: "word 'europe' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'napoleon' not in vocabulary"
+WARNING: KeyError: "word 'petersburg' not in vocabulary"
+WARNING: KeyError: "word 'nicholas' not in vocabulary"
+WARNING: KeyError: "word 'ride' not in vocabulary"
+WARNING: KeyError: "word 'arrive' not in vocabulary"
+WARNING: KeyError: "word 'descend' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'indifference' not in vocabulary"
+WARNING: KeyError: "word 'steel' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'fleet' not in vocabulary"
+WARNING: KeyError: "word 'spear' not in vocabulary"
+WARNING: KeyError: "word 'speed' not in vocabulary"
+WARNING: KeyError: "word 'italian' not in vocabulary"
+WARNING: KeyError: "word 'exist' not in vocabulary"
+WARNING: KeyError: "word 'signal' not in vocabulary"
+WARNING: KeyError: "word 'couple' not in vocabulary"
+WARNING: KeyError: "word 'chase' not in vocabulary"
+WARNING: KeyError: "word 'pace' not in vocabulary"
+WARNING: KeyError: "word 'grant' not in vocabulary"
+WARNING: KeyError: "word 'camp' not in vocabulary"
+WARNING: KeyError: "word 'major' not in vocabulary"
+WARNING: KeyError: "word 'finish' not in vocabulary"
+WARNING: KeyError: "word 'retreat' not in vocabulary"
+WARNING: KeyError: "word 'rear' not in vocabulary"
+WARNING: KeyError: "word 'flow' not in vocabulary"
+WARNING: KeyError: "word 'campaign' not in vocabulary"
+...Total performance across all 1309 analogies: 0.0015 (Exact); 0.0031 (MRR); 321 (MR)
+...Analogy performance across 969 "sem" relation types: 0.0000 (Exact); 0.0017 (MRR); 593 (MR)
+	relation	N	exact	MRR	MR
+	capitals	1	0.0000	0.0000	inf
+	binary_gender	12	0.0000	0.0064	156
+	antonym	54	0.0000	0.0019	525
+	member	4	0.0000	0.0004	2232
+	hypernomy	542	0.0000	0.0019	538
+	similar	117	0.0000	0.0019	532
+	partof	29	0.0000	0.0010	985
+	instanceof	9	0.0000	0.0003	2997
+	derivedfrom	133	0.0000	0.0009	1053
+	hascontext	32	0.0000	0.0007	1495
+	relatedto	10	0.0000	0.0009	1062
+	attributeof	11	0.0000	0.0020	496
+	causes	6	0.0000	0.0007	1407
+	entails	9	0.0000	0.0009	1090
+...Analogy performance across 340 "syn" relation types: 0.0059 (Exact); 0.0072 (MRR); 139 (MR)
+	relation	N	exact	MRR	MR
+	adj_adv	22	0.0000	0.0007	1494
+	comparative	7	0.0000	0.0012	836
+	superlative	3	0.0000	0.0018	570
+	present_participle	62	0.0000	0.0014	697
+	denonym	2	0.0000	0.0051	196
+	past_tense	64	0.0156	0.0167	60
+	plural_nouns	107	0.0093	0.0105	95
+	plural_verbs	73	0.0000	0.0016	616
+saving model to  skipsaved/model.ckpt
+Epoch 26
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 27
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 28
+train loss : 0.6935603106568996 | train acc: 0.0
+Epoch 29
+train loss : 0.6935603106568996 | train acc: 0.0

@@ -33,16 +33,23 @@ def downstream_validation(word_vectors_fn, external_val_analogies):
             r_exact[(t, r)] = 0
         a, b, c, d = abcd
         try:
+            #looks like top 1000 words for analogy
+            #just means 1/3 of total vocab
             # A - B = C - D => D = C + B - A
             result = wv.most_similar(positive=[b, c], negative=[a], topn=1000)
             topn_words = [r[0] for r in result]
         except KeyError as err:  # word not in vocabulary; only possible when loading external word vectors
             topn_words = [None]
             print("WARNING: KeyError: {0}".format(err))
+        # if the correct answer is in the top 1000 words
         if d in topn_words:
-            t_correct[t] += 1 / (topn_words.index(d) + 1)  # reciprocol rank score
-            r_correct[(t, r)] += 1 / (topn_words.index(d) + 1)  # reciprocol rank score
+            # adds inversely proportional to the rank in the top 1000 words
+            # t is total correct
+            # r correct is the specific result paired with the analogy
+            t_correct[t] += 1 / (topn_words.index(d) + 1)  # reciprocal rank score
+            r_correct[(t, r)] += 1 / (topn_words.index(d) + 1)  # reciprocal rank score
             all_correct += 1 / (topn_words.index(d) + 1)
+        # if it's the first word the embedding produced
         if d == topn_words[0]:
             t_exact[t] += 1
             r_exact[(t, r)] += 1

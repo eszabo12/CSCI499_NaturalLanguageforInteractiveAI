@@ -126,7 +126,7 @@ def train_epoch(
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, labels) in tqdm.tqdm(loader):
-        print("inputs, labels", inputs.size(), labels.size())
+        # print("inputs, labels", inputs.size(), labels.size())
         # put model inputs to device
         inputs, labels = inputs.to(device).long(), labels.to(device).long()
 

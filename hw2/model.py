@@ -37,7 +37,7 @@ class cbow(torch.nn.Module):
                 sum = torch.add(sum, embed)
             holder[idx] = sum
         # if self.verbose:
-        print("holder size", holder.size())
+        # print("holder size", holder.size())
         out = self.linear(holder)
         if self.verbose:
             print("out size", out.size())

@@ -138,11 +138,13 @@ def iou_pytorch(outputs: torch.Tensor, labels: torch.Tensor):
     union = (outputs | labels).float().sum()         # Will be zero if both are 0
     
     iou = (intersection + SMOOTH) / (union + SMOOTH)  # We smooth our devision to avoid 0/0
+    print("union, ", union)
+    print("iou", iou)
+    # thresholded = torch.clamp(20 * (iou - 0.5), 0, 10).ceil() / 10  # This is equal to comparing with thresolds
     
-    thresholded = torch.clamp(20 * (iou - 0.5), 0, 10).ceil() / 10  # This is equal to comparing with thresolds
+    return iou
     
-    return thresholded.mean()
-    
+
 def train_epoch(
     args,
     model,
