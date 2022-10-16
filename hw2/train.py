@@ -4,6 +4,7 @@ import tqdm
 import torch
 from sklearn.metrics import accuracy_score
 from torch.utils.data import DataLoader, Dataset
+import math
 
 from eval_utils import downstream_validation
 import utils
@@ -47,7 +48,8 @@ def setup_dataloader(args):
     # (you can use utils functions) and create respective
     # dataloaders.
     # ===================================================== #
-    dataset = []
+    dataset_t = []
+    dataset_v = []
     didx = 0
     for idx, sentence in enumerate(encoded_sentences):
         length = lens[idx][0]
@@ -67,18 +69,20 @@ def setup_dataloader(args):
                 #this can't happen in real sentences bc we throw out words of len 0
                 continue
             target = word
-            dataset.append(tuple((context_words, target)))
-            # print(tuple((context_words, target)))
+            # [0,9] - 0.8 for train and 0.2 for test
+            if torch.randint(10, (1,)) <=7:
+                dataset_v.append(tuple((target, context_words)))
+            else:
+                dataset_t.append(tuple((target, context_words)))
             didx += 1
     length = didx
     print("len", length)
-    train_dataset, test_dataset = torch.utils.data.random_split(dataset, [length - 3000,3000 ])
-    train_set = cbow_data(args, train_dataset)
-    val_set = cbow_data(args, test_dataset)
+    #3752269
+    train_set = cbow_data(args, dataset_t)
+    val_set = cbow_data(args, dataset_v)
     train_loader = DataLoader(train_set, batch_size=args.batch_size, drop_last=True)
     val_loader = DataLoader(val_set, batch_size=args.batch_size, drop_last=True)
     return train_loader, val_loader, index_to_vocab
-
 
 def setup_model(args):
     """
