@@ -12,10 +12,7 @@ I noticed that the sentences were looking like this:
     0    0    0    0    0    0    0    0    0    0    0    0    0    0
     0    0    0    0    0    0    0    0    0    0    0    0    0    0
     0    0    0    0    0    0    0    0    0    0    0    0    0    0
-    0    0    0    0    0    0    0    0    0    0    0    0    0    0
-
-    ... ]
-    so most of the context and targets were all zeroes.
+    0    0    0    0    0    0    0    0    0    0    0    0    0    0 ... ] so most of the context and targets were all zeroes.
 
  - I threw away samples with context windows that were all 0s, even if the target word itself wasn't pad. this amounted to what I estimated to be a very large portion of the samples, given what I observed from printing the samples. it seemed that the recommended_pad number was much higher than the length of most of the sentences- this would make sense, given it's just a max over all lengths.
  - I did an 80/20 split using random numbers for splitting into bins during the processing. I chose to split based on sample and not sentence, so a sample in the train could come from the exact same sentence and even a neighboring word as the train set. the model might have performed worse had I not done this.
@@ -27,7 +24,8 @@ I noticed that the sentences were looking like this:
  - I chose a batch size of 256 and dropped the last samples that didn't fit in the last batch- the program crashed when I didn't do this. 256 was an arbitrary power of two
  - I set the context window to 1, i.e. 1 word on either side of the target word
 ### In vitro
-The performance was measured by accuracy. this is a direct measure of the proportion of times the model produced the target word which fits within the context. 
+ - The performance was measured by accuracy. this is a direct measure of the proportion of times the model produced the target word which fits within the context.
+ - I got an accuracy score of 0.272372... in vitro for the task. this metric seems pretty high, but can be explained by the fact that my training set is very large and the model learned the features of the train set well by the time this was assessed.
 ### In vivo
 Evaluating downstream performance on analogy task over 1309 analogies...
 ...Total performance across all 1309 analogies: 0.0008 (Exact); 0.0051 (MRR); 198 (MR)
@@ -66,7 +64,7 @@ Evaluating downstream performance on analogy task over 1309 analogies...
 
 ### Code analysis:
  - In the preprocessing code, it joins all lines in a book and asks the spacy language library to identify sentences. while it makes this call before removing punctuation, if it incorrectly identifies the start and end of a sentence, then in the dataset the start and end tokens will be put in the wrong places.
- - 
+ - the preprocessing returns a giant list of sentences for us to parse. this implies that we should take the context windows and targets from within each sentence, instead of between, as order might not be preserved (and there are transitions between books). however, words that appear in very short sentences might do very poorly, as their context is dominated by the somewhat meaningless start and end token. so the code is assuming that the benefits provided by splitting by sentence and learning placement of words that appear more at the start or end of a sentence, as well as isolating the overall meaning that changes by sentence, outweighs the drawbacks of stranded words in small sentences.
 
 
 ## Bonus, SKIPGRAM:
@@ -75,8 +73,9 @@ Evaluating downstream performance on analogy task over 1309 analogies...
  - I also set the context window to 1, and used the same embed dim
 
 ### In vitro
- - I needed to decide whether to evaluate the in-vitro accuracy with the actual tokens or the one-hot-encoded, 3000 more dimensional versions of the target words. I decided to use the one-hot encoded versions and pytorch's bitwise operators to compare the values at each index.
- - I got an accuracy score of 0.272372... in vitro for the task. this metric seems pretty high, but can be explained by the fact that my training set is very large and the model learned the features of the train set well by the time this was assessed.
+val acc: 0.00013646157458424568
+  - I needed to decide whether to evaluate the in-vitro accuracy with the actual tokens or the one-hot-encoded, 3000 more dimensional versions of the target words. I decided to use the one-hot encoded versions and pytorch's bitwise operators to compare the values at each index. 
+  - 
 ### In vivo
  - after the model was trained, this was how it performed on the analogy tasks:
 Evaluating downstream performance on analogy task over 1309 analogies...
