@@ -75,7 +75,7 @@ Evaluating downstream performance on analogy task over 1309 analogies...
 ### In vitro
 val acc: 0.00013646157458424568
   - I needed to decide whether to evaluate the in-vitro accuracy with the actual tokens or the one-hot-encoded, 3000 more dimensional versions of the target words. I decided to use the one-hot encoded versions and pytorch's bitwise operators to compare the values at each index. 
-  - 
+  - the accuracy is pretty low; I used the iou metric, which, if the target words are unique, then is # correct / context window size. random would be (1/3000)^2 for this, so it does significantly better than that. however it underestimates model performance due to the requirement of exact matches, and in the case where the context words are the same, it is skewed to 0 or 1, which doesn't provide nuance.
 ### In vivo
  - after the model was trained, this was how it performed on the analogy tasks:
 Evaluating downstream performance on analogy task over 1309 analogies...
