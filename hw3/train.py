@@ -1,7 +1,11 @@
 import tqdm
 import torch
+from torch.utils.data import DataLoader, Dataset
+
 import argparse
 from sklearn.metrics import accuracy_score
+import json 
+from model import Encoder, Decoder, EncoderDecoder
 
 from utils import (
     get_device,
@@ -10,7 +14,59 @@ from utils import (
     build_output_tables,
     prefix_match
 )
+class AlfredData(Dataset):
+    #inputs a python dictionary { "dialogue": ["action", "target"]}
+    #input size must be <= 57
+    def __init__(self, args, train):
+        self.actions_to_index, self.index_to_actions, self.targets_to_index, self.index_to_targets = build_output_tables(train)
+        self.action_maps = tuple((self.actions_to_index, self.index_to_actions, self.targets_to_index, self.index_to_targets))
+        self.vocab_to_index, self.index_to_vocab, self.num_pad, self.max_len = build_tokenizer_table(train, args.vocab_size)
+        self.vocab_maps = tuple((self.vocab_to_index, self.index_to_vocab, self.num_pad, self.max_len))
+        self.args = args
+        self.input_size = args.input_size
+        idx = 0
+        self.data = []
+        ep_length = -1
+        for episode_list in train:
+            instructions = []
+            episode_outputs = torch.empty((args.targets_length, 2))
+            j = 0
+            for instruction in episode_list:
+                inst, (a, t) = instruction
+                inst = self.process_words([self.vocab_to_index.get(i, 3) for i in preprocess_string(inst).split()])
+                inst.insert(0, self.vocab_to_index["<start>"])
+                inst.append(self.vocab_to_index["<end>"])
+                instructions += inst
+                episode_outputs[j] = torch.Tensor( [self.actions_to_index[a], self.targets_to_index[t]])
+                j += 1
+            while j < args.targets_length:
+                episode_outputs[j] = torch.Tensor( [self.actions_to_index["Stop"], self.targets_to_index["Stop"]])
+                j+=1
+            instructions = torch.Tensor(instructions + [0]*(args.instruction_length - len(instructions))) #padding
+            self.data.append(tuple((instructions, episode_outputs)))
+            idx += 1
+            if idx > 50:
+                break
+        self.size = idx
+        self.num_actions = len(self.index_to_actions)
+        self.num_targets = len(self.index_to_targets)
 
+    def process_words(self, instruction):
+        #subtract 2 for start and end tokens
+        num_pad = self.input_size - 2 - len(instruction)
+        instruction = [1] + instruction + [2] + [0] * num_pad
+        #truncates the input to input size
+        return instruction[:self.input_size]
+    #returns lists corresponding to one episode
+    def __getitem__(self, idx):
+        inputs, outputs = self.data[idx]
+        return inputs, outputs
+    def __len__(self):
+        return self.size
+    def get_maps(self):
+        return self.vocab_maps
+    def get_act_maps(self):
+        return self.action_maps
 
 def setup_dataloader(args):
     """
@@ -27,12 +83,23 @@ def setup_dataloader(args):
 
     # Hint: use the helper functions provided in utils.py
     # ===================================================== #
-    train_loader = None
-    val_loader = None
-    return train_loader, val_loader
+    whole_data = None
+    with open(args.in_data_fn) as f:
+        whole_data = json.load(f)
+    train = whole_data["train"] #there is a redundant dimension
+    train_dataset = AlfredData(args, train)
+    train_loader = DataLoader(train_dataset, batch_size=args.batch_size)
+    # torch.save(train_loader, 'Dataloaders/train_loader.pt')
+    maps = train_dataset.get_maps()
+    act_maps = train_dataset.get_act_maps()
+    # torch.save(map, 'Dataloaders/maps')
+    test = whole_data["valid_seen"] #there is a redundant dimension
+    test_dataset = AlfredData(args, test)
+    val_loader = DataLoader(test_dataset, batch_size=args.batch_size)
+    return train_loader, val_loader, maps, act_maps
 
 
-def setup_model(args):
+def setup_model(args, maps, act_maps):
     """
     return:
         - model: YourOwnModelClass
@@ -54,7 +121,7 @@ def setup_model(args):
     # of feeding the model prediction into the recurrent model,
     # you will give the embedding of the target token.
     # ===================================================== #
-    model = None
+    model = EncoderDecoder(args, maps, act_maps)
     return model
 
 
@@ -68,8 +135,8 @@ def setup_optimizer(args, model):
     # Task: Initialize the loss function for action predictions
     # and target predictions. Also initialize your optimizer.
     # ===================================================== #
-    criterion = None
-    optimizer = None
+    criterion = torch.nn.CrossEntropyLoss()
+    optimizer = torch.optim.Adam(model.parameters())
 
     return criterion, optimizer
 
@@ -105,13 +172,20 @@ def train_epoch(
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, labels) in loader:
+        print("inputs and labels shape", inputs.size(), labels.size())
         # put model inputs to device
         inputs, labels = inputs.to(device), labels.to(device)
-
         # calculate the loss and train accuracy and perform backprop
         # NOTE: feel free to change the parameters to the model forward pass here + outputs
         output = model(inputs, labels)
-
+        print("model output size", output.size())
+        actions = output[:,:,:args.num_actions]
+        targets = output[:,:,args.num_actions:]
+        a, v = actions.topk(1)
+        t, v = targets.topk(1)
+        print("a size", a.size())
+        predictions = torch.concat((a, t), dim=2)
+        print("predictions size", predictions.size())
         loss = criterion(output.squeeze(), labels[:, 0].long())
 
         # step optimizer and compute gradients during training
@@ -208,12 +282,11 @@ def main(args):
     device = get_device(args.force_cpu)
 
     # get dataloaders
-    train_loader, val_loader, maps = setup_dataloader(args)
+    train_loader, val_loader, maps, act_maps = setup_dataloader(args)
     loaders = {"train": train_loader, "val": val_loader}
 
     # build model
-    model = setup_model(args, maps, device)
-    print(model)
+    model = setup_model(args, maps, act_maps)
 
     # get optimizer and loss functions
     criterion, optimizer = setup_optimizer(args, model)
@@ -242,11 +315,22 @@ if __name__ == "__main__":
     )
     parser.add_argument("--force_cpu", action="store_true", help="debug mode")
     parser.add_argument("--eval", action="store_true", help="run eval")
-    parser.add_argument("--num_epochs", default=1000, help="number of training epochs")
+    parser.add_argument("--num_epochs", type=int, default=1000, help="number of training epochs")
     parser.add_argument(
         "--val_every", default=5, help="number of epochs between every eval loop"
     )
-
+    parser.add_argument("--input_size", type=int, default=55)
+    parser.add_argument("--output_size", type=int, default=90)
+    parser.add_argument("--vocab_size", type=int, default=1000)
+    parser.add_argument("--embedding_dim", type=int, default=31)
+    parser.add_argument("--learning_rate", type=float, default=0.01)
+    parser.add_argument("--num_outputs", type=int, default=88)
+    parser.add_argument("--teacher_ratio", type=float, default=0.5)
+    parser.add_argument("--episode_length", type=int, default=19)
+    parser.add_argument("--instruction_length", type=int, default=684)
+    parser.add_argument("--targets_length", type=int, default=12)
+    parser.add_argument("--num_actions", type=int, default=9)
+    
     # ================== TODO: CODE HERE ================== #
     # Task (optional): Add any additional command line
     # parameters you may need here

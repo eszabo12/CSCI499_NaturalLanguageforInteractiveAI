@@ -31,13 +31,17 @@ def preprocess_string(s):
     return s
 
 
-def build_tokenizer_table(train, vocab_size=1000):
+def build_tokenizer_table(train, vocab_size=10000):
+    print("build_tokenizer_table")
     word_list = []
     padded_lens = []
     inst_count = 0
+    max_len = 0
     for episode in train:
-        for inst, _ in episode:
+        for epoch in episode:
+            inst, _ = epoch
             inst = preprocess_string(inst)
+            max_len = max(len(inst.split()), max_len)
             padded_len = 2  # start/end
             for word in inst.lower().split():
                 if len(word) > 0:
@@ -53,17 +57,22 @@ def build_tokenizer_table(train, vocab_size=1000):
     vocab_to_index["<start>"] = 1
     vocab_to_index["<end>"] = 2
     vocab_to_index["<unk>"] = 3
+    print("maxlen: ", max_len)
     index_to_vocab = {vocab_to_index[w]: w for w in vocab_to_index}
     return (
         vocab_to_index,
         index_to_vocab,
         int(np.average(padded_lens) + np.std(padded_lens) * 2 + 0.5),
+        max_len,
     )
 
 
 def build_output_tables(train):
     actions = set()
+    actions.add("Stop")
     targets = set()
+    targets.add("Stop")
+    print("actions set,", actions)
     for episode in train:
         for _, outseq in episode:
             a, t = outseq

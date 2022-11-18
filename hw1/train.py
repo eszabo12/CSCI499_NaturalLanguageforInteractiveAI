@@ -9,6 +9,55 @@ from utils import (
     build_tokenizer_table,
     build_output_tables,
 )
+# make action start token
+
+
+class AlfredData(Dataset):
+    #inputs a python dictionary { "dialogue": ["action", "target"]}
+    #input size must be <= 57
+    def __init__(self, args, train):
+        self.actions_to_index, self.index_to_actions, self.targets_to_index, self.index_to_targets = build_output_tables(train)
+        self.maps = tuple((self.actions_to_index, self.index_to_actions, self.targets_to_index, self.index_to_targets))
+        self.vocab_to_index, self.index_to_vocab, self.num_pad, self.max_len = build_tokenizer_table(train, args.vocab_size)
+        self.input_size = args.input_size
+        idx = 0
+        self.inputs = []
+        self.outputs = []
+        ep_length = -1
+        for episode_list in train:
+            episode = []
+            ep_length = max(ep_length, len(episode_list))
+            for instruction in episode_list:
+                inst, (a, t) = instruction
+                #3 is the <unk> token
+                inst = self.process_words([self.vocab_to_index.get(i, 3) for i in preprocess_string(inst).split()])
+                #squeeze gets rid of the redundant dimensions
+                input = torch.tensor(inst, dtype=int).squeeze()
+                outputs = torch.tensor([self.actions_to_index[a], self.targets_to_index[t]], dtype=int).squeeze()
+                episode.append(tuple((input, outputs)))
+
+                # self.inputs.append(input)
+                # self.outputs.append(outputs)
+            idx += 1
+        print("max episode length: ", ep_length)
+        self.size = idx
+        self.num_actions = len(self.index_to_actions)
+        self.num_targets = len(self.index_to_targets)
+
+    def process_words(self, instruction):
+        #subtract 2 for start and end tokens
+        num_pad = self.input_size - 2 - len(instruction)
+        instruction = [1] + instruction + [2] + [0] * num_pad
+        #truncates the input to input size
+        return torch.tensor(instruction[:self.input_size])
+    def __getitem__(self, idx):
+        input = self.inputs[idx]
+        outputs = self.outputs[idx]
+        return input, outputs
+    def __len__(self):
+        return self.size
+    def get_maps(self):
+        return self.maps
 
 
 def setup_dataloader(args):
@@ -255,6 +304,12 @@ if __name__ == "__main__":
     parser.add_argument(
         "--val_every", default=5, help="number of epochs between every eval loop"
     )
+    parser.add_argument("--input_size", type=int, default=55)
+    parser.add_argument("--vocab_size", type=int, default=1000)
+    parser.add_argument("--embedding_dim", type=int, default=31)
+    parser.add_argument("--learning_rate", type=float, default=0.01)
+    parser.add_argument("--episode_length", type=int, default=16)
+
 
     # ================== TODO: CODE HERE ================== #
     # Task (optional): Add any additional command line
