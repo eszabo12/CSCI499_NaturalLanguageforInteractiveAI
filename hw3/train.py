@@ -6,6 +6,8 @@ import argparse
 from sklearn.metrics import accuracy_score
 import json 
 from model import Encoder, Decoder, EncoderDecoder
+import random
+import einops
 
 from utils import (
     get_device,
@@ -171,22 +173,44 @@ def train_epoch(
 
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
-    for (inputs, labels) in loader:
-        print("inputs and labels shape", inputs.size(), labels.size())
+    for (inputs, outputs) in loader:
+        print("inputs and labels shape", inputs.size(), outputs.size())
         # put model inputs to device
-        inputs, labels = inputs.to(device), labels.to(device)
+        inputs, outputs = inputs.to(device).long(), outputs.to(device).long()
         # calculate the loss and train accuracy and perform backprop
         # NOTE: feel free to change the parameters to the model forward pass here + outputs
-        output = model(inputs, labels)
-        print("model output size", output.size())
-        actions = output[:,:,:args.num_actions]
-        targets = output[:,:,args.num_actions:]
-        a, v = actions.topk(1)
-        t, v = targets.topk(1)
-        print("a size", a.size())
-        predictions = torch.concat((a, t), dim=2)
-        print("predictions size", predictions.size())
-        loss = criterion(output.squeeze(), labels[:, 0].long())
+        loss = 0
+        use_teacher_forcing = True if random.random() < 0.5 else False
+
+        batch_size = 51
+        hidden = torch.zeros(1,args.embedding_dim, requires_grad=True)
+        encoder_outputs = torch.zeros(batch_size, args.instruction_length, args.embedding_dim, device=device)
+        for i in range(args.instruction_length):
+            # print("encoder input", inputs[:,i].size())
+            encoder_output, encoder_hidden = model.encoder(inputs[:,i], hidden)
+            # print("encoder output size", encoder_output.size())
+            encoder_outputs[:,i] = encoder_output
+        decoder_hidden = torch.zeros(1, 684, 1)
+        decoder_input = torch.zeros(batch_size, 2).long()
+        if use_teacher_forcing:
+            for i in range(args.targets_length):
+                decoder_output, decoder_hidden = model.decoder(
+                decoder_input, decoder_hidden, encoder_outputs)
+                actions = decoder_output[:,:args.num_actions].float()
+                targets = decoder_output[:,args.num_actions:].float()
+                loss += criterion(actions, outputs[:,i,0]) + criterion(targets, outputs[:,i,1])
+                decoder_input = outputs[:,i]  # Teacher forcing
+        else:
+            for i in range(args.targets_length):
+                decoder_output, decoder_hidden = model.decoder(
+                decoder_input, decoder_hidden, encoder_outputs)
+                actions = decoder_output[:,:args.num_actions]
+                targets = decoder_output[:,args.num_actions:]
+                v, a = actions.topk(1)
+                # print("a, v", a.size(), v.size())
+                v, t = targets.topk(1)
+                decoder_input = torch.Tensor(torch.concat((a, t), dim=1)).detach()
+                loss += criterion(actions, outputs[:,i,0]) + criterion(targets, outputs[:,i,1])
 
         # step optimizer and compute gradients during training
         if training:
@@ -201,8 +225,8 @@ def train_epoch(
         # Feel free to change the input to these functions.
         """
         # TODO: add code to log these metrics
-        em = output == labels
-        prefix_em = prefix_em(output, labels)
+        # em = output == outputs
+        # prefix_em = prefix_em(output, outputs)
         acc = 0.0
 
         # logging
