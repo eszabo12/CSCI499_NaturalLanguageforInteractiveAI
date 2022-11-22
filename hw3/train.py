@@ -8,7 +8,9 @@ import json
 from model import Encoder, Decoder, EncoderDecoder
 import random
 import einops
+import sys
 
+EPSILON = sys.float_info.epsilon
 from utils import (
     get_device,
     preprocess_string,
@@ -29,34 +31,36 @@ class AlfredData(Dataset):
         idx = 0
         self.data = []
         ep_length = -1
+        max_instr = 0
         for episode_list in train:
             instructions = []
-            episode_outputs = torch.empty((args.targets_length, 2))
+            # print("len episode list", len(episode_list))
+            episode_outputs = torch.zeros((args.targets_length, 2))
             j = 0
+            instr_len = 0
             for instruction in episode_list:
                 inst, (a, t) = instruction
                 inst = self.process_words([self.vocab_to_index.get(i, 3) for i in preprocess_string(inst).split()])
-                inst.insert(0, self.vocab_to_index["<start>"])
-                inst.append(self.vocab_to_index["<end>"])
+                instr_len += len(inst)
                 instructions += inst
                 episode_outputs[j] = torch.Tensor( [self.actions_to_index[a], self.targets_to_index[t]])
                 j += 1
-            while j < args.targets_length:
-                episode_outputs[j] = torch.Tensor( [self.actions_to_index["Stop"], self.targets_to_index["Stop"]])
-                j+=1
+            max_instr = max(max_instr, instr_len)
+            episode_outputs[j] =  torch.Tensor( [self.actions_to_index["Stop"], self.targets_to_index["Stop"]])
             instructions = torch.Tensor(instructions + [0]*(args.instruction_length - len(instructions))) #padding
             self.data.append(tuple((instructions, episode_outputs)))
             idx += 1
-            if idx > 50:
-                break
+        print("max instr length", max_instr)
         self.size = idx
         self.num_actions = len(self.index_to_actions)
         self.num_targets = len(self.index_to_targets)
 
     def process_words(self, instruction):
         #subtract 2 for start and end tokens
+        instruction = [1] + instruction + [2]
         num_pad = self.input_size - 2 - len(instruction)
-        instruction = [1] + instruction + [2] + [0] * num_pad
+        if num_pad > 0:
+            instruction += [0] * num_pad
         #truncates the input to input size
         return instruction[:self.input_size]
     #returns lists corresponding to one episode
@@ -69,7 +73,7 @@ class AlfredData(Dataset):
         return self.vocab_maps
     def get_act_maps(self):
         return self.action_maps
-
+        
 def setup_dataloader(args):
     """
     return:
@@ -174,24 +178,32 @@ def train_epoch(
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, outputs) in loader:
+        action_preds = []
+        target_preds = []
+        preds = []
+        action_labels = []
+        target_labels = []
+        labels = []
         print("inputs and labels shape", inputs.size(), outputs.size())
         # put model inputs to device
         inputs, outputs = inputs.to(device).long(), outputs.to(device).long()
         # calculate the loss and train accuracy and perform backprop
         # NOTE: feel free to change the parameters to the model forward pass here + outputs
         loss = 0
-        use_teacher_forcing = True if random.random() < 0.5 else False
-
-        batch_size = 51
+        use_teacher_forcing = False
+        if training:
+            use_teacher_forcing = True if random.random() < 0.5 else False
+        print("batch size:", len(inputs))
+        batch_size = len(inputs) #change this
         hidden = torch.zeros(1,args.embedding_dim, requires_grad=True)
         encoder_outputs = torch.zeros(batch_size, args.instruction_length, args.embedding_dim, device=device)
         for i in range(args.instruction_length):
             # print("encoder input", inputs[:,i].size())
             encoder_output, encoder_hidden = model.encoder(inputs[:,i], hidden)
-            # print("encoder output size", encoder_output.size())
             encoder_outputs[:,i] = encoder_output
         decoder_hidden = torch.zeros(1, 684, 1)
         decoder_input = torch.zeros(batch_size, 2).long()
+        # final_outputs = torch.zeros(args.targets_length, 2)
         if use_teacher_forcing:
             for i in range(args.targets_length):
                 decoder_output, decoder_hidden = model.decoder(
@@ -200,6 +212,8 @@ def train_epoch(
                 targets = decoder_output[:,args.num_actions:].float()
                 loss += criterion(actions, outputs[:,i,0]) + criterion(targets, outputs[:,i,1])
                 decoder_input = outputs[:,i]  # Teacher forcing
+                if decoder_input == torch.Tensor( [model.actions_to_index["Stop"], model.targets_to_index["Stop"]]):
+                    break
         else:
             for i in range(args.targets_length):
                 decoder_output, decoder_hidden = model.decoder(
@@ -207,10 +221,20 @@ def train_epoch(
                 actions = decoder_output[:,:args.num_actions]
                 targets = decoder_output[:,args.num_actions:]
                 v, a = actions.topk(1)
-                # print("a, v", a.size(), v.size())
                 v, t = targets.topk(1)
+                # final_outputs[i] = torch.Tensor([a, t])
                 decoder_input = torch.Tensor(torch.concat((a, t), dim=1)).detach()
                 loss += criterion(actions, outputs[:,i,0]) + criterion(targets, outputs[:,i,1])
+                action_preds.extend(a.cpu().numpy())
+                target_preds.extend(t.cpu().numpy())
+                action_labels.extend(outputs[:,i,0].cpu().numpy())
+                target_labels.extend(outputs[:,i,1].cpu().numpy())
+                preds.append([a, t])
+                labels.append([outputs[:,i,0], outputs[:,i,1]])
+                if a == model.actions_to_index["Stop"] and t == model.targets_to_index["Stop"]:
+                    break
+        action_acc = accuracy_score(action_preds, action_labels)
+        target_acc = accuracy_score(target_preds, target_labels)
 
         # step optimizer and compute gradients during training
         if training:
@@ -225,12 +249,11 @@ def train_epoch(
         # Feel free to change the input to these functions.
         """
         # TODO: add code to log these metrics
-        # em = output == outputs
-        # prefix_em = prefix_em(output, outputs)
-        acc = 0.0
 
+        acc = (action_acc + target_acc) / 2.0
+        prefix_em = (preds, labels)
         # logging
-        epoch_loss += loss.item()
+        epoch_loss += loss
         epoch_acc += acc.item()
 
     epoch_loss /= len(loader)
@@ -263,7 +286,6 @@ def train(args, model, loaders, optimizer, criterion, device):
     # In each epoch we compute loss on each sample in our dataset and update the model
     # weights via backpropagation
     model.train()
-
     for epoch in tqdm.tqdm(range(args.num_epochs)):
 
         # train single epoch
@@ -275,6 +297,7 @@ def train(args, model, loaders, optimizer, criterion, device):
             optimizer,
             criterion,
             device,
+            training=True,
         )
 
         # some logging
@@ -314,7 +337,7 @@ def main(args):
 
     # get optimizer and loss functions
     criterion, optimizer = setup_optimizer(args, model)
-
+    
     if args.eval:
         val_loss, val_acc = validate(
             args,
@@ -325,6 +348,7 @@ def main(args):
             device,
         )
     else:
+        training = True
         train(args, model, loaders, optimizer, criterion, device)
 
 
@@ -335,24 +359,24 @@ if __name__ == "__main__":
         "--model_output_dir", type=str, help="where to save model outputs"
     )
     parser.add_argument(
-        "--batch_size", type=int, default=32, help="size of each batch in loader"
+        "--batch_size", type=int, default=256, help="size of each batch in loader"
     )
     parser.add_argument("--force_cpu", action="store_true", help="debug mode")
     parser.add_argument("--eval", action="store_true", help="run eval")
     parser.add_argument("--num_epochs", type=int, default=1000, help="number of training epochs")
     parser.add_argument(
-        "--val_every", default=5, help="number of epochs between every eval loop"
+        "--val_every", default=5, type=int, help="number of epochs between every eval loop"
     )
-    parser.add_argument("--input_size", type=int, default=55)
-    parser.add_argument("--output_size", type=int, default=90)
+    parser.add_argument("--input_size", type=int, default=1000)
+    parser.add_argument("--output_size", type=int, default=92)
     parser.add_argument("--vocab_size", type=int, default=1000)
     parser.add_argument("--embedding_dim", type=int, default=31)
     parser.add_argument("--learning_rate", type=float, default=0.01)
     parser.add_argument("--num_outputs", type=int, default=88)
     parser.add_argument("--teacher_ratio", type=float, default=0.5)
     parser.add_argument("--episode_length", type=int, default=19)
-    parser.add_argument("--instruction_length", type=int, default=684)
-    parser.add_argument("--targets_length", type=int, default=12)
+    parser.add_argument("--instruction_length", type=int, default=18962)
+    parser.add_argument("--targets_length", type=int, default=20)
     parser.add_argument("--num_actions", type=int, default=9)
     
     # ================== TODO: CODE HERE ================== #

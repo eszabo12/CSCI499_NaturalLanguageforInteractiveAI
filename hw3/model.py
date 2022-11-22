@@ -44,7 +44,6 @@ class Decoder(nn.Module):
         self.embedding = nn.Embedding(args.output_size, args.embedding_dim)
         self.attention = nn.Linear(args.embedding_dim, args.embedding_dim)
         self.gru = nn.GRU(args.embedding_dim, 1)
-        # self.out = nn.Linear(args.embedding_dim, args.output_size)
         self.out2 = nn.Linear(args.instruction_length, args.output_size)
         self.args = args
         self.ratio = args.teacher_ratio
@@ -96,50 +95,3 @@ class EncoderDecoder(nn.Module):
         self.encoder = Encoder(args).to(device)
         self.decoder = Decoder(args).to(device)
         self.actions_to_index, self.index_to_actions, self.targets_to_index, self.index_to_targets = act_maps
-
-    # def encoder(self, x):
-    #     batch_size = 51
-    #     hidden = None
-    #     encoding, hidden = self.encoder(x.to(torch.int64), hidden)
-    #     return encoding, hidden
-    # def decoder(self, x, y):
-        
-
-    # def forward(self, x, y):
-    #     teacher_forcing = random.random() > self.ratio
-    #     teacher_forcing = False
-    #     # if verbose:
-    #         # print("teacher forcing:", teacher_forcing)
-    #     print("x. y", x.size(), y.size()) #x. y r.Size([51, 684]) torch.Size([51, 12, 2])
-    #     batch_size = 51
-    #     hidden = None
-    #     inputs, outputs = x.int(), y.int()
-    #     encoding, hidden = self.encoder(inputs.to(torch.int64), hidden)
-    #     d_input = None
-    #     decoder_outputs = torch.empty(batch_size, self.args.targets_length, self.args.output_size, requires_grad=True)
-    #     # print("Decoder outputs size,", decoder_outputs.size())
-    #     d_output = torch.zeros(self.args.output_size, requires_grad=True).to(torch.int64)
-    #     for i in range(self.args.targets_length):
-    #         if teacher_forcing and i != 0:
-    #             d_input = outputs[:,i-1] # need to concatenate
-    #         else:
-    #             if i == 0:
-    #                  d_input = torch.zeros(batch_size, 2, requires_grad=True).to(torch.int64)
-    #             else:
-    #                 #returns tuple of values, indices
-    #                 # print("student forced")
-    #                 actions = d_output[:,:self.args.num_actions]
-    #                 targets = d_output[:,self.args.num_actions:]
-    #                 v, a = actions.topk(1)
-    #                 # print("a, v", a.size(), v.size())
-    #                 v, t = targets.topk(1)
-    #                 d_input = torch.Tensor(torch.concat((a, t), dim=1), requires_grad=True).to(torch.int64)
-    #                 # print("D input teacher", d_input)
-    #         # print("d_input, ,hidden, encoding:", d_input.size(), hidden.size(), encoding.size())
-    #         d_output, hidden = self.decoder(d_input, hidden, encoding)
-    #         # print("d outputs size", decoder_outputs.size())
-    #         decoder_outputs[:, i] = d_output
-    #         # if i >= len(outputs) - 1:
-    #         #     break
-    #     tensor_output = torch.Tensor(decoder_outputs, requires_grad=True).to(torch.int64)
-    #     return tensor_output

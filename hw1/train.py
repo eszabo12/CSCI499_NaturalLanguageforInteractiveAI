@@ -296,11 +296,11 @@ if __name__ == "__main__":
         "--model_output_dir", type=str, help="where to save model outputs"
     )
     parser.add_argument(
-        "--batch_size", type=int, default=32, help="size of each batch in loader"
+        "--batch_size", type=int, default=256, help="size of each batch in loader"
     )
     parser.add_argument("--force_cpu", action="store_true", help="debug mode")
     parser.add_argument("--eval", action="store_true", help="run eval")
-    parser.add_argument("--num_epochs", default=1000, help="number of training epochs")
+    parser.add_argument("--num_epochs", default=100, help="number of training epochs")
     parser.add_argument(
         "--val_every", default=5, help="number of epochs between every eval loop"
     )
