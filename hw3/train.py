@@ -186,6 +186,7 @@ def train_epoch(
         labels = []
         print("inputs and labels shape", inputs.size(), outputs.size())
         # put model inputs to device
+        print("device", device)
         inputs, outputs = inputs.to(device).long(), outputs.to(device).long()
         # calculate the loss and train accuracy and perform backprop
         # NOTE: feel free to change the parameters to the model forward pass here + outputs
