@@ -1,0 +1,4 @@
+
+val loss : 37.487606048583984 | val acc: 473.0 | val em: 0.0
+val loss : 36.4077033996582 | val acc: 473.0 | val em: 0.0
+val loss : 35.46153259277344 | val acc: 473.0 | val em: 0.0
