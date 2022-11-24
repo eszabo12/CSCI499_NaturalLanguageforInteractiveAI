@@ -33,23 +33,28 @@ class AlfredData(Dataset):
         ep_length = -1
         max_instr = 0
         for episode_list in train:
-            instructions = []
             # print("len episode list", len(episode_list))
+            # instructions = torch.zeros(args.targets_length*args.input_size)
+            instructions = torch.zeros((args.targets_length, args.input_size))
             episode_outputs = torch.zeros((args.targets_length, 2))
-            j = 0
+            episode_outputs[0] = torch.Tensor( [self.actions_to_index["Start"], self.targets_to_index["Start"]])
+            j = 1
             instr_len = 0
             for instruction in episode_list:
                 inst, (a, t) = instruction
+                instr_len += len(inst.split()) + 2
                 inst = self.process_words([self.vocab_to_index.get(i, 3) for i in preprocess_string(inst).split()])
-                instr_len += len(inst)
-                instructions += inst
+                # print(inst)
+                instructions[j] = torch.Tensor(inst)
                 episode_outputs[j] = torch.Tensor( [self.actions_to_index[a], self.targets_to_index[t]])
                 j += 1
             max_instr = max(max_instr, instr_len)
             episode_outputs[j] =  torch.Tensor( [self.actions_to_index["Stop"], self.targets_to_index["Stop"]])
-            instructions = torch.Tensor(instructions + [0]*(args.instruction_length - len(instructions))) #padding
-            self.data.append(tuple((instructions, episode_outputs)))
+            self.data.append(tuple((instructions.flatten(), episode_outputs)))
             idx += 1
+            if idx == 10000:
+                print("broke")
+                break
         print("max instr length", max_instr)
         self.size = idx
         self.num_actions = len(self.index_to_actions)
@@ -58,7 +63,7 @@ class AlfredData(Dataset):
     def process_words(self, instruction):
         #subtract 2 for start and end tokens
         instruction = [1] + instruction + [2]
-        num_pad = self.input_size - 2 - len(instruction)
+        num_pad = self.input_size - len(instruction)
         if num_pad > 0:
             instruction += [0] * num_pad
         #truncates the input to input size
@@ -66,6 +71,7 @@ class AlfredData(Dataset):
     #returns lists corresponding to one episode
     def __getitem__(self, idx):
         inputs, outputs = self.data[idx]
+        inputs = torch.Tensor(inputs).flatten()
         return inputs, outputs
     def __len__(self):
         return self.size
@@ -174,16 +180,12 @@ def train_epoch(
 
     epoch_loss = 0.0
     epoch_acc = 0.0
+    epoch_em = 0.0
 
     # iterate over each batch in the dataloader
     # NOTE: you may have additional outputs from the loader __getitem__, you can modify this
     for (inputs, outputs) in loader:
-        action_preds = []
-        target_preds = []
-        preds = []
-        action_labels = []
-        target_labels = []
-        labels = []
+
         print("inputs and labels shape", inputs.size(), outputs.size())
         # put model inputs to device
         print("device", device)
@@ -196,25 +198,27 @@ def train_epoch(
             use_teacher_forcing = True if random.random() < 0.5 else False
         print("batch size:", len(inputs))
         batch_size = len(inputs) #change this
+        preds = torch.empty((batch_size, args.targets_length, 2))
+        labels = torch.empty((batch_size, args.targets_length, 2))
         hidden = torch.zeros(1,args.embedding_dim, requires_grad=True)
-        encoder_outputs = torch.zeros(batch_size, args.instruction_length, args.embedding_dim, device=device)
-        for i in range(args.instruction_length):
-            # print("encoder input", inputs[:,i].size())
+        encoder_outputs = torch.zeros(batch_size, args.input_size, args.embedding_dim, device=device)
+        for i in range(args.targets_length):
             encoder_output, encoder_hidden = model.encoder(inputs[:,i], hidden)
             encoder_outputs[:,i] = encoder_output
-        decoder_hidden = torch.zeros(1, 684, 1)
+        decoder_hidden = torch.zeros(1, 55, 1)
         decoder_input = torch.zeros(batch_size, 2).long()
-        # final_outputs = torch.zeros(args.targets_length, 2)
         if use_teacher_forcing:
             for i in range(args.targets_length):
                 decoder_output, decoder_hidden = model.decoder(
                 decoder_input, decoder_hidden, encoder_outputs)
                 actions = decoder_output[:,:args.num_actions].float()
                 targets = decoder_output[:,args.num_actions:].float()
+                v, a = actions.topk(1)
+                v, t = targets.topk(1)
                 loss += criterion(actions, outputs[:,i,0]) + criterion(targets, outputs[:,i,1])
                 decoder_input = outputs[:,i]  # Teacher forcing
-                if decoder_input == torch.Tensor( [model.actions_to_index["Stop"], model.targets_to_index["Stop"]]):
-                    break
+                preds[:,i,0] = a.flatten()
+                preds[:,i,1] = t.flatten()
         else:
             for i in range(args.targets_length):
                 decoder_output, decoder_hidden = model.decoder(
@@ -223,21 +227,18 @@ def train_epoch(
                 targets = decoder_output[:,args.num_actions:]
                 v, a = actions.topk(1)
                 v, t = targets.topk(1)
-                # final_outputs[i] = torch.Tensor([a, t])
                 decoder_input = torch.Tensor(torch.concat((a, t), dim=1)).detach()
-                loss += criterion(actions, outputs[:,i,0]) + criterion(targets, outputs[:,i,1])
-                action_preds.extend(a.cpu().numpy())
-                target_preds.extend(t.cpu().numpy())
-                action_labels.extend(outputs[:,i,0].cpu().numpy())
-                target_labels.extend(outputs[:,i,1].cpu().numpy())
-                preds.append([a, t])
-                labels.append([outputs[:,i,0], outputs[:,i,1]])
-                if a == model.actions_to_index["Stop"] and t == model.targets_to_index["Stop"]:
-                    break
-        action_acc = accuracy_score(action_preds, action_labels)
-        target_acc = accuracy_score(target_preds, target_labels)
-
+                # print("Actions targets", actions[0].size(), outputs[0,i].size(), torch.max(outputs[:,i, 0]), torch.max(outputs[:,i, 1]))
+                loss += criterion(actions, outputs[:,i,0]) # + criterion(targets, outputs[:,i,1])
+                preds[:,i,0] = a.flatten()
+                preds[:,i,1] = t.flatten()
+        # print("preds, outputs", preds.flatten(1).size(), outputs.flatten(1).size())
+        accuracy = 0
+        for i in range(batch_size):
+            accuracy += accuracy_score(outputs[i][0], preds[i][0]) + accuracy_score(outputs[i][1], preds[i][1])
+            # accuracy += accuracy_score(outputs[i].flatten(1), preds[i].flatten(1))  / float(batch_size)
         # step optimizer and compute gradients during training
+        # accuracy /= float(batch_size)
         if training:
             optimizer.zero_grad()
             loss.backward()
@@ -251,16 +252,17 @@ def train_epoch(
         """
         # TODO: add code to log these metrics
 
-        acc = (action_acc + target_acc) / 2.0
-        prefix_em = (preds, labels)
+        # prefix = prefix_match(preds, labels)
         # logging
         epoch_loss += loss
-        epoch_acc += acc.item()
+        epoch_acc += accuracy
+        # epoch_em += prefix
 
     epoch_loss /= len(loader)
     epoch_acc /= len(loader)
+    epoch_em /= len(loader)
 
-    return epoch_loss, epoch_acc
+    return epoch_loss, epoch_acc, epoch_em
 
 
 def validate(args, model, loader, optimizer, criterion, device):
@@ -269,7 +271,7 @@ def validate(args, model, loader, optimizer, criterion, device):
 
     # don't compute gradients
     with torch.no_grad():
-        val_loss, val_acc = train_epoch(
+        val_loss, val_acc, val_em = train_epoch(
             args,
             model,
             loader,
@@ -279,7 +281,7 @@ def validate(args, model, loader, optimizer, criterion, device):
             training=False,
         )
 
-    return val_loss, val_acc
+    return val_loss, val_acc, val_em
 
 
 def train(args, model, loaders, optimizer, criterion, device):
@@ -291,7 +293,7 @@ def train(args, model, loaders, optimizer, criterion, device):
 
         # train single epoch
         # returns loss for action and target prediction and accuracy
-        train_loss, train_acc = train_epoch(
+        train_loss, train_acc, train_em = train_epoch(
             args,
             model,
             loaders["train"],
@@ -303,12 +305,14 @@ def train(args, model, loaders, optimizer, criterion, device):
 
         # some logging
         print(f"train loss : {train_loss}")
+        print(f"train acc : {train_acc}")
+        print(f"train em : {train_em}")
 
         # run validation every so often
         # during eval, we run a forward pass through the model and compute
         # loss and accuracy but we don't update the model weights
         if epoch % args.val_every == 0:
-            val_loss, val_acc = validate(
+            val_loss, val_acc, val_em = validate(
                 args,
                 model,
                 loaders["val"],
@@ -317,7 +321,7 @@ def train(args, model, loaders, optimizer, criterion, device):
                 device,
             )
 
-            print(f"val loss : {val_loss} | val acc: {val_acc}")
+            print(f"val loss : {val_loss} | val acc: {val_acc} | val em: {val_em}")
 
     # ================== TODO: CODE HERE ================== #
     # Task: Implement some code to keep track of the model training and
@@ -340,7 +344,7 @@ def main(args):
     criterion, optimizer = setup_optimizer(args, model)
     
     if args.eval:
-        val_loss, val_acc = validate(
+        val_loss, val_acc, val_em = validate(
             args,
             model,
             loaders["val"],
@@ -368,8 +372,8 @@ if __name__ == "__main__":
     parser.add_argument(
         "--val_every", default=5, type=int, help="number of epochs between every eval loop"
     )
-    parser.add_argument("--input_size", type=int, default=1000)
-    parser.add_argument("--output_size", type=int, default=92)
+    parser.add_argument("--input_size", type=int, default=55)
+    parser.add_argument("--output_size", type=int, default=94)
     parser.add_argument("--vocab_size", type=int, default=1000)
     parser.add_argument("--embedding_dim", type=int, default=31)
     parser.add_argument("--learning_rate", type=float, default=0.01)
@@ -377,8 +381,8 @@ if __name__ == "__main__":
     parser.add_argument("--teacher_ratio", type=float, default=0.5)
     parser.add_argument("--episode_length", type=int, default=19)
     parser.add_argument("--instruction_length", type=int, default=18962)
-    parser.add_argument("--targets_length", type=int, default=20)
-    parser.add_argument("--num_actions", type=int, default=9)
+    parser.add_argument("--targets_length", type=int, default=21) #19+2
+    parser.add_argument("--num_actions", type=int, default=10)
     
     # ================== TODO: CODE HERE ================== #
     # Task (optional): Add any additional command line

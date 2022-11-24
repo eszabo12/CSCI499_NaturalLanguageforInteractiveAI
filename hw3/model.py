@@ -44,33 +44,33 @@ class Decoder(nn.Module):
         self.embedding = nn.Embedding(args.output_size, args.embedding_dim)
         self.attention = nn.Linear(args.embedding_dim, args.embedding_dim)
         self.gru = nn.GRU(args.embedding_dim, 1)
-        self.out2 = nn.Linear(args.instruction_length, args.output_size)
+        self.out2 = nn.Linear(args.input_size, args.output_size)
         self.args = args
         self.ratio = args.teacher_ratio
         self.num_actions = 9 #added stop
 
     def forward(self, decoder_input, decoder_hidden, encoder_outputs):
-        print("decoder_input:", decoder_input.size())
-        print("hidden:", decoder_hidden.size())
-        print("encoder_outputs:", encoder_outputs.size())
+        # print("decoder_input:", decoder_input.size())
+        # print("hidden:", decoder_hidden.size())
+        # print("encoder_outputs:", encoder_outputs.size())
         embedded = self.embedding(decoder_input)
         # if verbose:
-        print("embedded:", embedded.size())
+        # print("embedded:", embedded.size())
         # embedded = embedded.flatten(1, 2)
         # print("embedded:", embedded.size())
         output = torch.cat((embedded, encoder_outputs), dim=1)
-        print("output:", output.size())
+        # print("output:", output.size())
         output = self.attention(encoder_outputs)
-        print("output:", output.size())
+        # print("output:", output.size())
         # if verbose:
             # print("output:", output.size())
         output = F.relu(output)
-        print("output:", output.size())
+        # print("output:", output.size())
         # if verbose:
             # print("output:", output.size())
         output, decoder_hidden = self.gru(output, decoder_hidden)
         # if verbose:
-        print("output2:", output.size())
+        # print("output2:", output.size())
         # output = F.log_softmax(self.out(output[0]), dim=1)
         # output = self.out(output)
         # print("output:", output.size())
@@ -78,7 +78,7 @@ class Decoder(nn.Module):
         output = self.out2(F.relu(output.squeeze()))
 
         # if verbose:
-        print("output3:", output.size())
+        # print("output3:", output.size())
         return output, decoder_hidden
 
 class EncoderDecoder(nn.Module):

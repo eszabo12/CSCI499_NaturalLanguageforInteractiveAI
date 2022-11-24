@@ -70,16 +70,20 @@ def build_tokenizer_table(train, vocab_size=10000):
 def build_output_tables(train):
     actions = set()
     actions.add("Stop")
+    actions.add("Start")
     targets = set()
     targets.add("Stop")
+    targets.add("Start")
     print("actions set,", actions)
     for episode in train:
         for _, outseq in episode:
             a, t = outseq
             actions.add(a)
             targets.add(t)
-    actions_to_index = {a: i+1 for i, a in enumerate(actions)}
-    targets_to_index = {t: i+1 for i, t in enumerate(targets)}
+    actions_to_index = {a: i for i, a in enumerate(actions)}
+    
+    targets_to_index = {t: i for i, t in enumerate(targets)}
+    print("num actions:", len(actions_to_index), len(targets_to_index), len(actions_to_index) + len(targets_to_index))
     index_to_actions = {actions_to_index[a]: a for a in actions_to_index}
     index_to_targets = {targets_to_index[t]: t for t in targets_to_index}
     return actions_to_index, index_to_actions, targets_to_index, index_to_targets
